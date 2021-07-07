@@ -40,8 +40,10 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name_plural = 'Countries'
+
 
 class Startapper(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
