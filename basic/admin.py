@@ -1,8 +1,12 @@
 from django.contrib import admin
+from parler.admin import TranslatableAdmin
+
+from .models import *
 
 admin.site.register(ApplicationStaff)
 
-@admin.register(SuccessProjects)
+
+@admin.register(SuccessProject)
 class SuccessProjectsAdmin(TranslatableAdmin):
     list_display = ('title', 'description',)
 
@@ -14,7 +18,7 @@ admin.site.register(CommentOfPost)
 class AboutUSAdmin(TranslatableAdmin):
     list_display = ('post_title', 'post_description',)
 
-admin.site.register(ContacktsProwork)
+admin.site.register(ContactsProwork)
 
 @admin.register(ProworkAdress)
 class ProworkAdressAdmin(TranslatableAdmin):
