@@ -34,16 +34,18 @@ class CustomUser(AbstractUser):
         },
     )
 
+
 class Country(models.Model):
     name = models.CharField(max_length=56)
 
     def __str__(self):
         return self.name
 
+
 class Startapper(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bio = models.TextField(default="no bio...", max_length=400)
-    country = models.ForeignKey(Country,models.CASCADE)
+    country = models.ForeignKey(Country, models.CASCADE)
     image = models.ImageField(upload_to='startapper_file/startapp_image', blank=True, null=True)
 
     def __str__(self):
@@ -53,7 +55,7 @@ class Startapper(models.Model):
 class Staff(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bio = models.TextField(default="no bio...", max_length=400)
-    country = models.ForeignKey(Country,models.CASCADE)
+    country = models.ForeignKey(Country, models.CASCADE)
     image = models.ImageField(upload_to='staff_image', blank=True, null=True)
 
     def __str__(self):
@@ -80,7 +82,6 @@ class AllUsersIdea(models.Model):
 
     def __str__(self):
         return f"{self.user.full_name}  - {self.file}"
-
 
 
 class ApplicationStaff(models.Model):
@@ -155,4 +156,4 @@ class ProworkAdress(TranslatableModel):
     location_latitude = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return self.safe_translation_getter('branch_name',)
+        return self.safe_translation_getter('branch_name', )
