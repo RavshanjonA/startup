@@ -29,4 +29,7 @@ class AboutUSAdmin(TranslatableAdmin):
     list_display = ('post_title', 'post_description',)
 
 admin.site.register(ContacktsProwork)
-admin.site.register(ProworkAdress)
+
+@admin.register(ProworkAdress)
+class ProworkAdressAdmin(TranslatableAdmin):
+    list_display = ('branch_name',)
