@@ -26,6 +26,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(
         'username',
         max_length=150,
+        null = True,
         unique=True,
         help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
         validators=[username_validator],
