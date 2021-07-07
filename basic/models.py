@@ -40,7 +40,8 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
-
+    class Meta:
+        verbose_name_plural = 'Countries'
 
 class Startapper(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -102,7 +103,7 @@ class ApplicationStaff(models.Model):
         return f"{self.user.user.username} - {self.user.user.user_type} - {self.resume}"
 
 
-class SuccessProjects(TranslatableModel):
+class SuccessProject(TranslatableModel):
     translate = TranslatedFields(
         title=models.CharField(max_length=255, null=True),
         description=models.TextField(null=True, blank=True)
@@ -112,7 +113,7 @@ class SuccessProjects(TranslatableModel):
 
 
 class CommentOfPost(models.Model):
-    post = models.ForeignKey(SuccessProjects, on_delete=models.CASCADE, related_name='comment')
+    post = models.ForeignKey(SuccessProject, on_delete=models.CASCADE, related_name='comment')
     replay_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     comment = models.CharField(null=True, blank=True, max_length=255)
@@ -137,7 +138,7 @@ class AboutUS(TranslatableModel):
         return self.safe_translation_getter('post_title')
 
 
-class ContacktsProwork(models.Model):
+class ContactsProwork(models.Model):
     adress = models.CharField(max_length=255)
     email = models.EmailField()
     phone_number = models.CharField(max_length=255)
@@ -148,7 +149,7 @@ class ContacktsProwork(models.Model):
 
 
 class ProworkAdress(TranslatableModel):
-    owner = models.ForeignKey(ContacktsProwork, on_delete=models.CASCADE)
+    owner = models.ForeignKey(ContactsProwork, on_delete=models.CASCADE)
     translation = TranslatedFields(
         branch_name=models.CharField(max_length=255)
     )
