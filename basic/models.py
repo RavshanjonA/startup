@@ -112,7 +112,7 @@ class SuccessProject(TranslatableModel):
     url = models.URLField(max_length=255)
 
 
-class CommentOfPost(models.Model):
+class CommentofPost(models.Model):
     post = models.ForeignKey(SuccessProject, on_delete=models.CASCADE, related_name='comment')
     replay_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
