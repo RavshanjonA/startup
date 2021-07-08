@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5" >
+        <h1>Registration form</h1>
+        <form action="{% url 'home' %}" method="post" >
+            {% for m in messages %} 
+                <div class="alert alert-danger" role="alert">
+                    {{ m }}
+                </div>
+                {% endfor %}
+            {% comment %} {% if error %}
+            <div class="alert alert-danger" role="alert">
+                    
+                {{error}}
+                </div>
+            {% endif %} {% endcomment %}
+            {% csrf_token %}
+            <div class="form-group mt-2">
+                <label for="firstInput">full_name</label>
+                {{ form.full_name }}
+            </div>
+            <div class="form-group mt-2">
+                <label for="firstInput">username</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group mt-2">
+                <label for="emailInput">Elektron pochta</label>
+                {{ form.email}}
+            </div>
+            <div class="form-group mt-2">
+                <label for="">Phone</label>
+                {{ form.phone}}
+            </div>
+            <div class="form-group mt-2">
+                <label for="usernameInput">User type</label>
+                {{form.user_type}}
+            </div>
+            <div class="form-group mt-2">
+                <label for="InputPassword">Password</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group mt-2">
+                <label for="exampleInputPassword1">Confirm Password</label>
+                {{ form.password2 }}
+                </div>
+    
+            <div class="button-group-area p-1 mt-1">
+                <button class="btn btn-primary" type="submit">registration</button>
+            </div>    
+            {% comment %} {{form.as_p}}
+            <div class="button-group-area p-1 mt-1">
+                <button class="btn btn-primary" type="submit">registration</button>
+            </div>  {% endcomment %}
+        </form>
+    </div>
+</body>
+</html>

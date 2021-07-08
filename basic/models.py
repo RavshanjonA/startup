@@ -16,10 +16,10 @@ class CustomUser(AbstractUser):
         (DEVELOPER, 'Developer'),
         (PRACTITIONER, 'Practitioner'),
     ]
-    full_name = models.CharField('full name', max_length=200, blank=False, null=False)
+    full_name = models.CharField('full name', max_length=200, blank=True, null=True)
     email = models.EmailField('email address', blank=False, null=False, unique=True)
     user_type = models.CharField(max_length=30, choices=USER_TYPE)
-    phone = models.CharField(max_length=30, blank=False, null=False, unique=True)
+    phone = models.CharField(max_length=30, blank=True, null=False, unique=True)
     date_joined = models.DateTimeField('date joined', default=timezone.now)
     username_validator = UnicodeUsernameValidator()
 
@@ -27,6 +27,7 @@ class CustomUser(AbstractUser):
         'username',
         max_length=150,
         unique=True,
+        null=True,
         help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
         validators=[username_validator],
         error_messages={
@@ -34,18 +35,22 @@ class CustomUser(AbstractUser):
         },
     )
 
+    def __str__(self):
+        return self.full_name or self.username
+    
 
 class Country(models.Model):
-    name = models.CharField(max_length=56)
+    name = models.CharField(max_length=56, null=True, blank=True)
 
     def __str__(self):
         return self.name
+        
     class Meta:
         verbose_name_plural = 'Countries'
 
 class Startapper(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    bio = models.TextField(default="no bio...", max_length=400)
+    bio = models.TextField(default="no bio...", max_length=400, null=True)
     country = models.ForeignKey(Country, models.CASCADE)
     image = models.ImageField(upload_to='startapper_file/startapp_image', blank=True, null=True)
 
