@@ -30,6 +30,14 @@ def home(request):
                                                         )         
                 user.save()
                 login(request, user)
+                usertype = CustomUser.objects.get(username=request.user.username)
+                print(usertype.user_type,'------------------------------')
+
+                if usertype.user_type == CustomUser.STARTAPPER:
+                    # saqlash = Startapper.objects.create(user.request.user)
+                    print('++++++++++++++++++++')
+                    # saqlash.save()
+                    return render(request, 'startapper.html')
             except IntegrityError:
                 messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
                 registr_form = CustomUserForm()
@@ -43,3 +51,14 @@ def home(request):
     else:
         registr_form = CustomUserForm()
         return render(request, 'home.html', {'form':registr_form})
+
+#vaqtinchaga
+# login(request, user)
+# usertype = CustomUser.objects.get(email=request.user.email)
+# if usertype.user_type == CustomUser.STARTAPPER:
+#     Startapper.objects.create(user=user).save()
+#     return render(request, 'startapper.html')
+# if user_type == CustomUser.DEVELOPER:
+#     print("Deweloper")
+# if user_type == CustomUser.PRACTITIONER:
+#     print("Amaliyotchi")
