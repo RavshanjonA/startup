@@ -12,7 +12,7 @@
 <body>
     <div class="container mt-5" >
         <h1>Registration form</h1>
-        <form action="{% url 'home' %}" method="post" >
+        <form action="{% url 'register' %}" method="post" >
             {% for m in messages %} 
                 <div class="alert alert-danger" role="alert">
                     {{ m }}

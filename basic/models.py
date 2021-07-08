@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(
         'username',
         max_length=150,
-        null = True,
+        null=True,
         unique=True,
         help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
         validators=[username_validator],
@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.full_name or self.username
-    
+
 
 class Country(models.Model):
     name = models.CharField(max_length=56, null=True, blank=True)
@@ -50,19 +50,19 @@ class Country(models.Model):
 
 
 class Startapper(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,related_name='startapper')
     bio = models.TextField(default="no bio...", max_length=400, null=True)
-    country = models.ForeignKey(Country, models.CASCADE)
+    country = models.ForeignKey(Country, models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='startapper_file/startapp_image', blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user
 
 
 class Staff(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bio = models.TextField(default="no bio...", max_length=400)
-    country = models.ForeignKey(Country, models.CASCADE)
+    country = models.ForeignKey(Country, models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='staff_image', blank=True, null=True)
 
     def __str__(self):

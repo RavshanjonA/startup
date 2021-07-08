@@ -6,8 +6,8 @@ from .models import *
 
 
 class CustomUserForm(UserCreationForm):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password1', 'placeholder':'enter the password...'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password2', 'placeholder':'Repeat the password...'}))
+    # password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password1', 'placeholder':'enter the password...'}))
+    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password2', 'placeholder':'Repeat the password...'}))
     class Meta:
         model = CustomUser
         fields = ('full_name', 'email', 'user_type','phone', 'password1', 'password2','username')
