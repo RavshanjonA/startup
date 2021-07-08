@@ -5,7 +5,7 @@ from .models import *
 
 admin.site.register(
     [CustomUser, Country, Startapper, Staff, IdeaStartapper, AllUsersIdea, ApplicationStaff, ContactsProwork,
-     CommentOfPost])
+     CommentofPost])
 
 
 @admin.register(SuccessProject)
@@ -21,3 +21,4 @@ class AboutUSAdmin(TranslatableAdmin):
 @admin.register(ProworkAdress)
 class ProworkAdressAdmin(TranslatableAdmin):
     list_display = ('branch_name',)
+
