@@ -1,64 +1,65 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
-from .forms import CustomUserForm
-from django.contrib.auth.models import User, auth
-from django.contrib.auth import login, logout
-from django.contrib import messages
-from django.contrib.auth.models import AbstractUser
-from .models import *
-from django.db import IntegrityError
-# Create your views here.
+from django.contrib import messages, auth
+from django.contrib.auth import login
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 
-def home(request):
+from basic.forms import CustomUserForm
+from basic.models import CustomUser, Startapper, Staff
+
+
+def register(request):
     if request.method == 'POST':
         full_name = request.POST['full_name']
         username = request.POST['username']
-        email = request.POST['email'] 
-        phone = request.POST['phone'] 
+        email = request.POST['email']
+        phone = request.POST['phone']
         user_type = request.POST['user_type']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
         if password1 == password2:
-            try:
+            if CustomUser.objects.filter(username=username).exists():
+                messages.info(request, "Foydalanuvchi nomi mavjud boshqa nom kiritng !!!")
+                return redirect('/')
+            elif CustomUser.objects.filter(email=email).exists():
+                messages.info(request, 'Elektron pochta mavjud')
+                return redirect('/')
+            elif CustomUser.objects.filter(phone=phone).exists():
+                messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
+                return redirect('/')
+            else:
                 user = CustomUser.objects.create_user(
-                                                        full_name=full_name,
-                                                        username=username, 
-                                                        phone=phone, 
-                                                        password=password1, 
-                                                        user_type=user_type,  
-                                                        email=email,
-                                                        )         
+                    full_name=full_name,
+                    username=username,
+                    phone=phone,
+                    password=password1,
+                    user_type=user_type,
+                    email=email,
+                )
                 user.save()
                 login(request, user)
-                usertype = CustomUser.objects.get(username=request.user.username)
-                print(usertype.user_type,'------------------------------')
-
-                if usertype.user_type == CustomUser.STARTAPPER:
-                    # saqlash = Startapper.objects.create(user.request.user)
-                    print('++++++++++++++++++++')
-                    # saqlash.save()
-                    return render(request, 'startapper.html')
-            except IntegrityError:
-                messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
-                registr_form = CustomUserForm()
-                return render(request, 'home.html', {'form':registr_form})
-
+                user_type = CustomUser.objects.get(email=request.user.email)
+                if user_type.user_type == CustomUser.STARTAPPER:
+                    Startapper.objects.create(user=user).save()
+                    return HttpResponse("Hello startapper")
+                if user_type.user_type == CustomUser.DEVELOPER:
+                    Staff.objects.create(user=user).save()
+                    return HttpResponse("Hello deweloper")
+                if user_type.user_type == CustomUser.PRACTITIONER:
+                    return HttpResponse("Hello senior")
         else:
-            messages.info(request, "Parollar bir xil emas!")
+            messages.info(request, "Parollar bir biriga to'g'ri kelmaydi !!!")
             return redirect('/')
-        
+
+        user = auth.authenticate(username=username, password=password1)
+        auth.login(request, user)
+        print("Autorizatsiya bolmadi")
+
         return redirect('/')
     else:
         registr_form = CustomUserForm()
-        return render(request, 'home.html', {'form':registr_form})
+        return render(request, 'register.html', {'form': registr_form})
 
-#vaqtinchaga
-# login(request, user)
-# usertype = CustomUser.objects.get(email=request.user.email)
-# if usertype.user_type == CustomUser.STARTAPPER:
-#     Startapper.objects.create(user=user).save()
-#     return render(request, 'startapper.html')
-# if user_type == CustomUser.DEVELOPER:
-#     print("Deweloper")
-# if user_type == CustomUser.PRACTITIONER:
-#     print("Amaliyotchi")
+
+def index(request):
+    return render(request, 'index.html')
