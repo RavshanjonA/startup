@@ -61,14 +61,14 @@
     <div class="container">
 
       <div class="logo float-left">
-        <h1 class="text-light"><a href="index.html"><span>DEVELOPER PAGE</span></a></h1>
+        <h1 class="text-light"><a href="index.html"><span>Mamba</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="% static 'assets/img/logo.png' %}"' %} alt="" class="img-fluid"></a>-->
       </div>
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
+          <li class="active"><a href="index.html">Home</a></li>
           <li><a href="{% url 'register' %}">Register</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
@@ -108,7 +108,7 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background-image: url(%{ static 'assets/img/slide/slide-1.jpg' %});">
+          <div class="carousel-item active" style="background-image: url({% static 'assets/img/slide/slide-1.jpg' %})">
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Mamba</span></h2>
@@ -119,7 +119,7 @@
           </div>
 
           <!-- Slide 2 -->
-          <div class="carousel-item" style="background-image: url('assets/img/slide/slide-2.jpg');">
+          <div class="carousel-item" style="background-image: url({% static 'assets/img/slide/slide-2.jpg' %})">
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown">Lorem Ipsum Dolor</h2>
@@ -160,6 +160,24 @@
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">
       <div class="container">
+      <form action="{% url 'login_user' %}" method="post">    
+          {% csrf_token %}
+          {% if error is None %}
+          {% else %}
+          <div class="col-4 alert alert-danger mt-4" style="color: rgb(216, 133, 38); " role="alert">
+              {{error}}
+          </div>
+          {% endif %}
+          <div class="col-4 mt-2" style="color: white; font-size: 20px;">
+              <div class='form-group'>
+              {{form.as_p}}
+              
+              <button type="submit" class=" btn btn-success" style="font-size: 20px;">
+                  Kirish</button>
+              </div>
+          </div>
+      </form>
+
 
         <div class="row no-gutters">
           <div class="col-lg-6 video-box">

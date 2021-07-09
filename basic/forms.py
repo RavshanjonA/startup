@@ -19,6 +19,14 @@ class CustomUserForm(UserCreationForm):
             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
 
+class LoginForm(AuthenticationForm):
+    username = UsernameField(label=("Login"), widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'loginni kiriting...', 'autofocus':True}))
+    password = forms.CharField(label=("Parol"),strip=False, widget=forms.PasswordInput(attrs={'autofocus':'current-password','class':'form-control', 'placeholder':'parolni kiriting...'}))
+    class Meta:
+        model = login
+        fields = "__all__"
+
+
 # class CustomUserForm(UserCreationForm):
 #     class Meta:
 #         model = CustomUser

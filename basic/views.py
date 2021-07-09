@@ -1,9 +1,9 @@
 from django.contrib import messages, auth
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from basic.forms import CustomUserForm
+from basic.forms import CustomUserForm, LoginForm
 from basic.models import CustomUser, Startapper, Staff
 
 
@@ -66,4 +66,21 @@ def register(request):
 
 
 def index(request):
+    return render(request, 'index.html')
+
+def login_user(request):
+    if request.method == 'GET':
+        user = LoginForm()
+        return render(request, 'login.html', {'form':user})
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'login_user.html', {'form':LoginForm(), 'error':'Login yoki parol xato kiritildi!'})
+        else:
+            login(request, user)
+            return render(request, 'index.html')
+
+
+def logout_user(request):
+    logout(request)
     return render(request, 'index.html')
