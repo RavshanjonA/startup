@@ -27,8 +27,9 @@ def register(request):
                 messages.info(request, 'Elektron pochta mavjud')
                 return render(request, 'register.html', {'form': registr_form})
             elif CustomUser.objects.filter(phone=phone).exists():
+                registr_form = CustomUserForm()
                 messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
-                return redirect('/')
+                return render(request, 'register.html', {'form': registr_form})
             else:
                 user = CustomUser.objects.create_user(
                     full_name=full_name,
