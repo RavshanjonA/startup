@@ -19,12 +19,42 @@ class CustomUserForm(UserCreationForm):
             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
 
+
 class LoginForm(AuthenticationForm):
-    username = UsernameField(label=("Login"), widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'loginni kiriting...', 'autofocus':True}))
-    password = forms.CharField(label=("Parol"),strip=False, widget=forms.PasswordInput(attrs={'autofocus':'current-password','class':'form-control', 'placeholder':'parolni kiriting...'}))
+    username = UsernameField(label=("Login"), widget=forms.TextInput(attrs={'class':'form-control text-dark', 'placeholder':'loginni kiriting...', 'autofocus':True}))
+    password = forms.CharField(label=("Parol"),strip=False, widget=forms.PasswordInput(attrs={'autofocus':'current-password','class':'form-control text-dark', 'placeholder':'parolni kiriting...'}))
     class Meta:
         model = login
         fields = "__all__"
+
+
+
+class StartapperAccountForm(forms.ModelForm):
+    class Meta:
+        model = Startapper
+        fields = ['user', 'bio','country','image']
+        labels = {'user':'Full name', 'bio':'Bio', 'country':'Country','image':'image'}
+        widgets = {'user':forms.TextInput(attrs={'class':'form-control'}),    
+                    'bio':forms.TextInput(attrs={'class':'form-control'}),    
+                    'country':forms.TextInput(attrs={'class':'form-control'})    
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class CustomUserForm(UserCreationForm):
