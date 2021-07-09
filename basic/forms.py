@@ -10,13 +10,13 @@ class CustomUserForm(UserCreationForm):
     # password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password2', 'placeholder':'Repeat the password...'}))
     class Meta:
         model = CustomUser
-        fields = ('full_name', 'email', 'user_type','phone', 'password1', 'password2','username')
+        fields = ('full_name', 'email', 'user_type', 'phone', 'password1', 'password2', 'username')
         widgets = {
-            'full_name':forms.TextInput(attrs={'class': 'form-control mt-2', 'name':'full_name'}), 
-            'username':forms.TextInput(attrs={'class': 'form-control mt-2', 'name':'username'}), 
-            'email':forms.EmailInput(attrs={'class': 'form-control mt-2', 'name':'email'}),
-            'phone':forms.TextInput(attrs={'class': 'form-control mt-2', 'name':'phone'}),   
-            'user_type':forms.Select(attrs={'class': 'form-control mt-2', 'name':'user_type'}), 
+            'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
+            'username': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'username'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control mt-2', 'name': 'email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
+            'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
 
 # class CustomUserForm(UserCreationForm):
@@ -39,7 +39,7 @@ class CustomUserForm(UserCreationForm):
 
 #     user_type = forms.Select(
 #     )
-    
+
 #     email = forms.EmailField(
 #         max_length=40,
 #         widget=forms.EmailInput(attrs={
@@ -49,7 +49,7 @@ class CustomUserForm(UserCreationForm):
 #             'required':'required'
 #         })
 #     )
-    
+
 #     username = forms.CharField(
 #         max_length=30,
 #         widget=forms.TextInput(attrs={
@@ -71,7 +71,7 @@ class CustomUserForm(UserCreationForm):
 #             'required':'required'
 #         })
 #     )
-    
+
 #     password1 = forms.CharField(
 #         max_length=30,
 #         widget=forms.PasswordInput(attrs={
@@ -82,7 +82,7 @@ class CustomUserForm(UserCreationForm):
 #             'required':'required'
 #         })
 #     )
-    
+
 #     password2 = forms.CharField(
 #         max_length=30,
 #         widget=forms.PasswordInput(attrs={
