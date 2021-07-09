@@ -19,11 +19,13 @@ def register(request):
 
         if password1 == password2:
             if CustomUser.objects.filter(username=username).exists():
+                registr_form = CustomUserForm()
                 messages.info(request, "Foydalanuvchi nomi mavjud boshqa nom kiritng !!!")
-                return redirect('/')
+                return render(request, 'register.html', {'form': registr_form})
             elif CustomUser.objects.filter(email=email).exists():
+                registr_form = CustomUserForm()
                 messages.info(request, 'Elektron pochta mavjud')
-                return redirect('/')
+                return render(request, 'register.html', {'form': registr_form})
             elif CustomUser.objects.filter(phone=phone).exists():
                 messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
                 return redirect('/')
@@ -41,12 +43,13 @@ def register(request):
                 user_type = CustomUser.objects.get(email=request.user.email)
                 if user_type.user_type == CustomUser.STARTAPPER:
                     Startapper.objects.create(user=user).save()
-                    return HttpResponse("Hello startapper")
+                    return render(request, 'startapper.html')
                 if user_type.user_type == CustomUser.DEVELOPER:
                     Staff.objects.create(user=user).save()
-                    return HttpResponse("Hello deweloper")
+                    return render(request, 'developer.html')
                 if user_type.user_type == CustomUser.PRACTITIONER:
-                    return HttpResponse("Hello senior")
+                    Staff.objects.create(user=user).save()
+                    return render(request, 'practitioner.html')
         else:
             messages.info(request, "Parollar bir biriga to'g'ri kelmaydi !!!")
             return redirect('/')
