@@ -15,15 +15,9 @@
         <form action="{% url 'register' %}" method="post" >
             {% for m in messages %} 
                 <div class="alert alert-danger" role="alert">
-                    {{ m }}
+                    <b>Xatolik!</b> {{ m }}
                 </div>
                 {% endfor %}
-            {% comment %} {% if error %}
-            <div class="alert alert-danger" role="alert">
-                    
-                {{error}}
-                </div>
-            {% endif %} {% endcomment %}
             {% csrf_token %}
             <div class="form-group mt-2">
                 <label for="firstInput">full_name</label>
@@ -41,6 +35,7 @@
                 <label for="">Phone</label>
                 {{ form.phone}}
             </div>
+            
             <div class="form-group mt-2">
                 <label for="usernameInput">User type</label>
                 {{form.user_type}}
@@ -57,10 +52,6 @@
             <div class="button-group-area p-1 mt-1">
                 <button class="btn btn-primary" type="submit">registration</button>
             </div>    
-            {% comment %} {{form.as_p}}
-            <div class="button-group-area p-1 mt-1">
-                <button class="btn btn-primary" type="submit">registration</button>
-            </div>  {% endcomment %}
         </form>
     </div>
 </body>
