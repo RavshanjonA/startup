@@ -21,15 +21,15 @@ def register(request):
             if CustomUser.objects.filter(username=username).exists():
                 registr_form = CustomUserForm()
                 messages.info(request, "Foydalanuvchi nomi mavjud boshqa nom kiritng !!!")
-                return render(request, 'register.html', {'form': registr_form})
+                return render(request, 'account/register.html', {'form': registr_form})
             elif CustomUser.objects.filter(email=email).exists():
                 registr_form = CustomUserForm()
                 messages.info(request, 'Elektron pochta mavjud')
-                return render(request, 'register.html', {'form': registr_form})
+                return render(request, 'account/register.html', {'form': registr_form})
             elif CustomUser.objects.filter(phone=phone).exists():
                 registr_form = CustomUserForm()
                 messages.info(request, "Bunday telefon nomer avval ro`yxatdan o'tgan!")
-                return render(request, 'register.html', {'form': registr_form})
+                return render(request, 'account/register.html', {'form': registr_form})
             else:
                 user = CustomUser.objects.create_user(
                     full_name=full_name,
@@ -62,7 +62,7 @@ def register(request):
         return redirect('/')
     else:
         registr_form = CustomUserForm()
-        return render(request, 'register.html', {'form': registr_form})
+        return render(request, 'account/register.html', {'form': registr_form})
 
 
 def index(request):
@@ -71,11 +71,11 @@ def index(request):
 def login_user(request):
     if request.method == 'GET':
         user = LoginForm()
-        return render(request, 'login.html', {'form':user})
+        return render(request, 'account/login.html', {'form':user})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'login_user.html', {'form':LoginForm(), 'error':'Login yoki parol xato kiritildi!'})
+            return render(request, 'account/login.html', {'form':LoginForm(), 'error':'Login yoki parol xato kiritildi!'})
         else:
             login(request, user)
             return render(request, 'index.html')
