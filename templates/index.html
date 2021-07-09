@@ -68,7 +68,7 @@
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="{% url 'home' %}">Home</a></li>
           {% if not user.is_authenticated %}
           <li><a href="{% url 'register' %}">Register</a></li>
           <li><a href="{% url 'login_user' %}">Login</a></li>
@@ -96,10 +96,12 @@
           <li><a href="#contact">Contact Us</a></li>
           {% if user.is_authenticated %}
           <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
+          <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
           {% endif %}
 
         </ul>
       </nav><!-- .nav-menu -->
+
 
     </div>
   </header><!-- End Header -->
@@ -114,7 +116,7 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background-image: url(%{ static 'assets/img/slide/slide-1.jpg' %});">
+          <div class="carousel-item active" style="background-image: url({% static 'assets/img/slide/slide-1.jpg' %});">
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Mamba</span></h2>

@@ -61,16 +61,18 @@
     <div class="container">
 
       <div class="logo float-left">
-        <h1 class="text-light"><a href="index.html"><span>STARTAPPER PAGE</span></a></h1>
+        <h1 class="text-light"><a href="index.html"><span>Mamba</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="% static 'assets/img/logo.png' %}"' %} alt="" class="img-fluid"></a>-->
       </div>
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="{% url 'home' %}">Home</a></li>
+          {% if not user.is_authenticated %}
           <li><a href="{% url 'register' %}">Register</a></li>
-          <li><a href="#about">About Us</a></li>
+          <li><a href="{% url 'login_user' %}">Login</a></li>
+          {% endif %}
           <li><a href="#services">Services</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#team">Team</a></li>
@@ -92,8 +94,14 @@
             </ul>
           </li>
           <li><a href="#contact">Contact Us</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
+          <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
+          {% endif %}
+
         </ul>
       </nav><!-- .nav-menu -->
+
 
     </div>
   </header><!-- End Header -->

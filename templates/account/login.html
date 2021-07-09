@@ -96,6 +96,7 @@
           <li><a href="#contact">Contact Us</a></li>
           {% if user.is_authenticated %}
           <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
+          <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
           {% endif %}
 
         </ul>
@@ -175,7 +176,7 @@
               {{error}}
           </div>
           {% endif %}
-          <div class="col-4 mt-2" style="color: white; font-size: 20px;">
+          <div class="col-4 mt-2" >
               <div class='form-group'>
               {{form.as_p}}
               
