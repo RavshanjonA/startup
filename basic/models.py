@@ -56,7 +56,7 @@ class Startapper(models.Model):
     image = models.ImageField(upload_to='startapper_file/startapp_image', blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return str(self.user) #full_name qaytarishi uchun string tipiga o`zgartirildi
 
 
 class Staff(models.Model):
@@ -66,7 +66,7 @@ class Staff(models.Model):
     image = models.ImageField(upload_to='staff_image', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username} ----- {self.user.user_type}"
+        return f"{self.user} ---/--- {self.user.user_type}"
 
 
 class IdeaStartapper(models.Model):
