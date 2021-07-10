@@ -29,13 +29,28 @@ class LoginForm(AuthenticationForm):
 
 
 
+class simpleCustomForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ( 'username', 'full_name', 'email', 'user_type', 'phone')
+        labels = {'username':'Username', 'full_name':'full_name', 'email':'email', 'user_type':'user_type','phone':'phone'}
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control mt-2 disabled', 'name': 'username','disabled':'username'}),
+            'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control mt-2', 'name': 'email'}),
+            'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type','disabled':'user_type'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
+        }
+
+
 class StartapperAccountForm(forms.ModelForm):
     class Meta:
         model = Startapper
-        fields = ['user', 'bio','country','image']
-        labels = {'user':'Full name', 'bio':'Bio', 'country':'Country','image':'image'}
+        fields = ['user', 'bio','country','image', 'user.full_name']
+        labels = {'user':'Full name','user.full_name':'FIO', 'bio':'Bio', 'country':'Country','image':'image'}
         widgets = {'user':forms.TextInput(attrs={'class':'form-control'}),    
-                    'bio':forms.TextInput(attrs={'class':'form-control'}),    
+                    'user.full_name':forms.Textarea(attrs={'class':'form-control'}),    
+                    'bio':forms.Textarea(attrs={'class':'form-control'}),    
                     'country':forms.TextInput(attrs={'class':'form-control'})    
                     }
 

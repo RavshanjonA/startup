@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from basic.forms import CustomUserForm, LoginForm
+from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, simpleCustomForm
 from basic.models import CustomUser, Startapper, Staff
 
 
@@ -84,3 +84,38 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return render(request, 'index.html')
+
+
+def startapper_account(request):
+    # print(request.user)
+    # user = CustomUser.objects.get(username=request.user.username)
+    # print(user)
+    # startapper = Startapper.objects.get(user=request.user)
+    # print(startapper)
+    # return render(request, 'account/startapper_account.html', context={"obj": user, "startapp": startapper})
+    
+    
+    if request.method == 'GET':
+        user = CustomUser.objects.get(username=request.user.username)
+        customForm = simpleCustomForm(instance=user)
+        print(customForm,'999999999999999999999999999999999')
+        
+        startapper = Startapper.objects.get(user=request.user)
+        print(startapper,'77777777777777777777777777777')
+        startappForm = StartapperAccountForm(instance=startapper)
+
+        return render(request, 'account/startapper_account.html',{"obj": customForm,'form':startappForm})
+    else:
+        # c_form = customForm(request.POST, request.FILES, instance=request.user)
+
+        startapper = Startapper.objects.get(user=request.user)
+        print(startapper,'------------------------------------------')
+        s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
+
+        if s_form.is_valid():
+            print('++++++++++++++++++++++++++++++++++++++++')
+            # c_form.save()
+            s_form.save()
+        return render(request, 'account/startapper_account.html')
+
+# DoesNotExist 
