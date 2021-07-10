@@ -132,19 +132,11 @@
             
             {% csrf_token %}
             <div class='form-group'>
-                {{obj.username}}
-                {{obj.full_name}}
-                {{obj.email}}
-                {{obj.user_type}}
-                {{obj.phone}}
+                {{obj.as_p}}
                 <hr><br>
 
 full name:
-                {{form.user}}
-                <br>
-                {{form.bio}}
-                {{form.country}}
-                {{form.image}}
+                {{form.as_p}}
                 <input type="submit" class=" btn btn-primary" value="saqlash">
                 </div>
     

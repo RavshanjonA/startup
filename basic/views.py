@@ -98,10 +98,8 @@ def startapper_account(request):
     if request.method == 'GET':
         user = CustomUser.objects.get(username=request.user.username)
         customForm = simpleCustomForm(instance=user)
-        print(customForm,'999999999999999999999999999999999')
-        
+
         startapper = Startapper.objects.get(user=request.user)
-        print(startapper,'77777777777777777777777777777')
         startappForm = StartapperAccountForm(instance=startapper)
 
         return render(request, 'account/startapper_account.html',{"obj": customForm,'form':startappForm})
@@ -109,7 +107,6 @@ def startapper_account(request):
         # c_form = customForm(request.POST, request.FILES, instance=request.user)
 
         startapper = Startapper.objects.get(user=request.user)
-        print(startapper,'------------------------------------------')
         s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
 
         if s_form.is_valid():
