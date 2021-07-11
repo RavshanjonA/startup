@@ -2,5 +2,21 @@
 {% load static %}
 {% block title %}  Announcement page  {% endblock %}
 {% block body %}
-    {{ form  }}
+ <form action="{% url 'announcement' %}" method="post" >
+
+            {% csrf_token %}
+            <div class='form-group'>
+                <p>Title</p>
+                {{form.title}}
+                <p>Description</p>
+                {{form.description}}
+                <label class="form-label" for="customFile">File tanlang:</label>
+
+                {{form.file}}
+
+                <input type="submit" class=" btn btn-primary" value="saqlash">
+                </div>
+
+        </form>
+
 {% endblock %}

@@ -61,7 +61,7 @@ class IdeaStartApperForm(forms.ModelForm):
         labels = {'title':'Title', 'description':'Description', 'file':'file'}
         widgets = {'title': forms.TextInput(attrs={'class': 'form-control'}),
                    'description': forms.Textarea(attrs={'class': 'form-control'}),
-                   'file': forms.FileInput(attrs={'class': 'form-control'})
+                   'file': forms.FileInput(attrs={'class': 'form-control','id':"customFile",'name':'Fayl tanlash'})
                    }
 
 

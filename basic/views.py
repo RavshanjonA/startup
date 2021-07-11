@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, simpleCustomForm
+from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
 from basic.models import CustomUser, Startapper, Staff
 
 
@@ -80,42 +80,35 @@ def login_user(request):
             login(request, user)
             return render(request, 'index.html')
 
-
 def logout_user(request):
     logout(request)
     return render(request, 'index.html')
 
 
-def startapper_account(request):
-    # print(request.user)
-    # user = CustomUser.objects.get(username=request.user.username)
-    # print(user)
-    # startapper = Startapper.objects.get(user=request.user)
-    # print(startapper)
-    # return render(request, 'account/startapper_account.html', context={"obj": user, "startapp": startapper})
-    
-    
+def announcement(request):
+    idea_form = IdeaStartApperForm(instance=request.user)
     if request.method == 'GET':
-        user = CustomUser.objects.get(username=request.user.username)
-        customForm = simpleCustomForm(instance=user)
-        print(customForm,'999999999999999999999999999999999')
-        
-        startapper = Startapper.objects.get(user=request.user)
-        print(startapper,'77777777777777777777777777777')
-        startappForm = StartapperAccountForm(instance=startapper)
+        return render(request,'announcement.html',{'form':idea_form})
+    else:
 
+        idea_form = IdeaStartApperForm(request.POST, request.FILES, instance=request.user)
+        if idea_form.is_valid():
+            idea_form.save()
+        return render(request, 'index.html')
+
+def startapper_account(request):
+    user = CustomUser.objects.get(username=request.user.username)
+    customForm = SimpleCustomForm(instance=user)
+    startapper = Startapper.objects.get(user=request.user)
+    startappForm = StartapperAccountForm(instance=startapper)
+
+    if request.method == 'GET':
         return render(request, 'account/startapper_account.html',{"obj": customForm,'form':startappForm})
     else:
-        # c_form = customForm(request.POST, request.FILES, instance=request.user)
-
-        startapper = Startapper.objects.get(user=request.user)
-        print(startapper,'------------------------------------------')
         s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
-
-        if s_form.is_valid():
-            print('++++++++++++++++++++++++++++++++++++++++')
-            # c_form.save()
+        c_form = SimpleCustomForm(request.POST, request.FILES, instance=startapper)
+        if s_form.is_valid() and c_form:
+            c_form.save()
             s_form.save()
-        return render(request, 'account/startapper_account.html')
+        return render(request, 'index.html')
 
-# DoesNotExist 
