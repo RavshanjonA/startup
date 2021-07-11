@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
+from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, simpleCustomForm
 from basic.models import CustomUser, Startapper, Staff
 
 
@@ -68,21 +68,14 @@ def register(request):
 def index(request):
     return render(request, 'index.html')
 
-
-def announcement(request):
-    obj = IdeaStartApperForm()
-    return render(request, 'announcement.html', {"form": obj})
-
-
 def login_user(request):
     if request.method == 'GET':
         user = LoginForm()
-        return render(request, 'account/login.html', {'form': user})
+        return render(request, 'account/login.html', {'form':user})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'account/login.html',
-                          {'form': LoginForm(), 'error': 'Login yoki parol xato kiritildi!'})
+            return render(request, 'account/login.html', {'form':LoginForm(), 'error':'Login yoki parol xato kiritildi!'})
         else:
             login(request, user)
             return render(request, 'index.html')
@@ -100,19 +93,29 @@ def startapper_account(request):
     # startapper = Startapper.objects.get(user=request.user)
     # print(startapper)
     # return render(request, 'account/startapper_account.html', context={"obj": user, "startapp": startapper})
-    user = CustomUser.objects.get(username=request.user.username)
-    startapper = Startapper.objects.get(user=request.user)
-    customForm = SimpleCustomForm(instance=user)
-    startappForm = StartapperAccountForm(instance=startapper)
+    
+    
     if request.method == 'GET':
-        return render(request, 'account/startapper_account.html', {"obj": customForm, 'form': startappForm})
+        user = CustomUser.objects.get(username=request.user.username)
+        customForm = simpleCustomForm(instance=user)
+        print(customForm,'999999999999999999999999999999999')
+        
+        startapper = Startapper.objects.get(user=request.user)
+        print(startapper,'77777777777777777777777777777')
+        startappForm = StartapperAccountForm(instance=startapper)
+
+        return render(request, 'account/startapper_account.html',{"obj": customForm,'form':startappForm})
     else:
-        if customForm.is_valid() and startappForm.is_valid():
-            customForm.save()
-            startappForm.save()
-            messages.info(request, "Parol Yangilandi")
-            return redirect('/')
-        else:
-            print(startappForm.is_valid())
-            return HttpResponse('Forma Toliq emas')
-# DoesNotExist
+        # c_form = customForm(request.POST, request.FILES, instance=request.user)
+
+        startapper = Startapper.objects.get(user=request.user)
+        print(startapper,'------------------------------------------')
+        s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
+
+        if s_form.is_valid():
+            print('++++++++++++++++++++++++++++++++++++++++')
+            # c_form.save()
+            s_form.save()
+        return render(request, 'account/startapper_account.html')
+
+# DoesNotExist 
