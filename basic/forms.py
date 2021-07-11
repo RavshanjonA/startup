@@ -29,7 +29,7 @@ class LoginForm(AuthenticationForm):
 
 
 
-class simpleCustomForm(UserCreationForm):
+class SimpleCustomForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ( 'username', 'full_name', 'email', 'user_type', 'phone')
@@ -46,13 +46,23 @@ class simpleCustomForm(UserCreationForm):
 class StartapperAccountForm(forms.ModelForm):
     class Meta:
         model = Startapper
-        fields = ['user', 'bio','country','image', 'user.full_name']
-        labels = {'user':'Full name','user.full_name':'FIO', 'bio':'Bio', 'country':'Country','image':'image'}
-        widgets = {'user':forms.TextInput(attrs={'class':'form-control'}),    
-                    'user.full_name':forms.Textarea(attrs={'class':'form-control'}),    
-                    'bio':forms.Textarea(attrs={'class':'form-control'}),    
-                    'country':forms.TextInput(attrs={'class':'form-control'})    
+        fields = ['user', 'bio','country','image',]
+        labels = {'user':'Full name','bio':'Bio', 'country':'Country','image':'image'}
+        widgets = {'user':forms.TextInput(attrs={'class':'form-control'}),
+                    'bio':forms.Textarea(attrs={'class':'form-control'}),
+                    'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
                     }
+
+
+class IdeaStartApperForm(forms.ModelForm):
+    class Meta:
+        model = IdeaStartapper
+        fields = ['title','description','file']
+        labels = {'title':'Title', 'description':'Description', 'file':'file'}
+        widgets = {'title': forms.TextInput(attrs={'class': 'form-control'}),
+                   'description': forms.Textarea(attrs={'class': 'form-control'}),
+                   'file': forms.FileInput(attrs={'class': 'form-control'})
+                   }
 
 
 
