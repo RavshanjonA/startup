@@ -1,52 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}  Announcement page  {% endblock %}
+{% block title %} Announcement page {% endblock %}
 {% block body %}
 
 <div class="container">
- <form action="{% url 'announcement' %}" method="post" enctype="multipart/form-data">
-        <form  method="POST" class="form-group" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-12 form-group" id="left">
+        <form action="{% url 'announcement' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+                <div class="col-12 form-group" id="left">
                         <label for="title">title</label>
-                        <input type="text" class="form-control" name="title" id="title">
+                        <input type="text" class="form-control" name="title" id="title" required>
                         <label for="description">description</label>
-                        <input type="textare" class="form-control" name="description" id="description" required>
-                    
-                        <label for="file" >File</label>
-                        <input type="file" class="form-control "  name="file" id="file" required>
-                        
-                    </div>
+                        <textarea class="form-control" name="description" id="description" required cols="30" rows="10"></textarea>
+
+                        <label for="file">File</label>
+                        <input type="file" class="form-control " name="file" id="file" required>
                 </div>
-                
-                
-            <button type="submit" class="btn btn-primary"   style="font-size: medium;">E'lon yaratish</button>
-            
-            </form>
-
-
-
-        <!-- 
-            {% csrf_token %}
-            <div class='form-group'>
-                <p>Title:</p>
-                {{form.title}}<br>
-                <p>Description:</p>
-                {{form.description}}<br>
-                <label class="form-label" for="customFile">File tanlang:</label> 
------------------------
-                {{form.title}}
-                {{form.description}}
-                <div class="form-control">
-                        {{form.file}}
-                        <label for="file">
-
-                        </label>
-                </div>
-                <input type="submit" class=" btn btn-primary" value="saqlash">
-                </div> -->
-
+        </div>
+        <button type="submit" class="btn btn-primary" style="font-size: medium;">E'lon yaratish</button>
         </form>
+
 </div>
 {% endblock %}
