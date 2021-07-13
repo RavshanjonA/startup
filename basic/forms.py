@@ -57,15 +57,13 @@ class StartapperAccountForm(forms.ModelForm):
 class IdeaStartApperForm(forms.ModelForm):
     class Meta:
         model = IdeaStartapper
+        # fields = "__all__"
         fields = ['title','description','file']
         labels = {'title':'Title', 'description':'Description', 'file':'file'}
-        widgets = {'title': forms.TextInput(attrs={'class': 'form-control'}),
-                   'description': forms.Textarea(attrs={'class': 'form-control'}),
-                   'file': forms.FileInput(attrs={'class': 'form-control','id':"customFile",'name':'Fayl tanlash'})
-                   }
-
-
-
+        # widgets = {'title': forms.TextInput(attrs={'class': 'form-control','name':'title'}),
+        #            'description': forms.Textarea(attrs={'class': 'form-control','name':'description'}),
+        #            'file': forms.FileInput(attrs={'class': 'form-control','id':"customFile",'name':'file'})
+        #            }
 
 
 

@@ -2,21 +2,51 @@
 {% load static %}
 {% block title %}  Announcement page  {% endblock %}
 {% block body %}
- <form action="{% url 'announcement' %}" method="post" >
 
+<div class="container">
+ <form action="{% url 'announcement' %}" method="post" enctype="multipart/form-data">
+        <form  method="POST" class="form-group" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 form-group" id="left">
+                        <label for="title">title</label>
+                        <input type="text" class="form-control" name="title" id="title">
+                        <label for="description">description</label>
+                        <input type="textare" class="form-control" name="description" id="description" required>
+                    
+                        <label for="file" >File</label>
+                        <input type="file" class="form-control "  name="file" id="file" required>
+                        
+                    </div>
+                </div>
+                
+                
+            <button type="submit" class="btn btn-primary"   style="font-size: medium;">E'lon yaratish</button>
+            
+            </form>
+
+
+
+        <!-- 
             {% csrf_token %}
             <div class='form-group'>
-                <p>Title</p>
+                <p>Title:</p>
+                {{form.title}}<br>
+                <p>Description:</p>
+                {{form.description}}<br>
+                <label class="form-label" for="customFile">File tanlang:</label> 
+-----------------------
                 {{form.title}}
-                <p>Description</p>
                 {{form.description}}
-                <label class="form-label" for="customFile">File tanlang:</label>
+                <div class="form-control">
+                        {{form.file}}
+                        <label for="file">
 
-                {{form.file}}
-
-                <input type="submit" class=" btn btn-primary" value="saqlash">
+                        </label>
                 </div>
+                <input type="submit" class=" btn btn-primary" value="saqlash">
+                </div> -->
 
         </form>
-
+</div>
 {% endblock %}

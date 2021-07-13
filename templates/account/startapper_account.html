@@ -73,7 +73,7 @@
             <li><a href="{% url 'register' %}">Register</a></li>
             <li><a href="{% url 'login_user' %}">Login</a></li>
             {% endif %}
-            <li><a href="#services">Services</a></li>
+            <li><a href="#services">Post</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#team">Team</a></li>
             <li class="drop-down"><a href="">Drop Down</a>
@@ -140,11 +140,13 @@
                 <hr><br>
 
 full name:
-                {{form.user}}
+                {{form.user.full_name}}
                 <br>
+                bio: 
                 {{form.bio}}
                 {{form.country}}
                 {{form.image}}
+                <img src="{{form.image}}" alt="">
                 <input type="submit" class=" btn btn-primary" value="saqlash">
                 </div>
     

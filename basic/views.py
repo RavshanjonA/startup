@@ -2,9 +2,12 @@ from django.contrib import messages, auth
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
-from basic.models import CustomUser, Startapper, Staff
+from basic.models import CustomUser, Startapper, Staff, IdeaStartapper
+from django.views.generic import CreateView
 
 
 def register(request):
@@ -43,7 +46,10 @@ def register(request):
                 login(request, user)
                 user_type = CustomUser.objects.get(email=request.user.email)
                 if user_type.user_type == CustomUser.STARTAPPER:
-                    Startapper.objects.create(user=user).save()
+                    startapper = Startapper.objects.create(user=user)
+                    startapper.save()
+                    idea = IdeaStartapper.objects.create(user=startapper)
+                    idea.save()
                     return render(request, 'startapper.html')
                 if user_type.user_type == CustomUser.DEVELOPER:
                     Staff.objects.create(user=user).save()
@@ -68,6 +74,7 @@ def register(request):
 def index(request):
     return render(request, 'index.html')
 
+
 def login_user(request):
     if request.method == 'GET':
         user = LoginForm()
@@ -80,21 +87,31 @@ def login_user(request):
             login(request, user)
             return render(request, 'index.html')
 
+
 def logout_user(request):
     logout(request)
     return render(request, 'index.html')
 
 
-def announcement(request):
-    idea_form = IdeaStartApperForm(instance=request.user)
-    if request.method == 'GET':
-        return render(request,'announcement.html',{'form':idea_form})
-    else:
 
-        idea_form = IdeaStartApperForm(request.POST, request.FILES, instance=request.user)
-        if idea_form.is_valid():
-            idea_form.save()
-        return render(request, 'index.html')
+def announcement(request):
+    startapper = Startapper.objects.get(user=request.user)
+    metal = IdeaStartapper.objects.all()
+    if request.method == "POST" and request.FILES:
+        title    = request.POST['title']
+        description = request.POST['description']
+        file       = request.FILES.get('file')
+        elonlar = IdeaStartapper(
+                title = title,
+                description = description,
+                file = file,
+                user = startapper
+                )
+        elonlar.save()
+        return redirect('/')
+    else:
+        return render(request, 'announcement.html')
+
 
 def startapper_account(request):
     user = CustomUser.objects.get(username=request.user.username)
