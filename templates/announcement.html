@@ -4,7 +4,7 @@
 {% block body %}
 
 <div class="container">
-        <form action="{% url 'announcement' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'announcement' %}" method="POST" enctype="multipart/form-data" class='pb-5'>
         {% csrf_token %}
         <div class="row">
                 <div class="col-12 form-group" id="left">
@@ -18,7 +18,7 @@
                         <input type="file" class="form-control " name="file" id="file" required>
                 </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="font-size: medium;">E'lon yaratish</button>
+        <button type="submit" class="btn btn-primary" style="font-size: medium;">Add announcements</button>
         </form>
 
 </div>

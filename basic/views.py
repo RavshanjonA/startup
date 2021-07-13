@@ -96,7 +96,6 @@ def logout_user(request):
 @login_required
 def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
-    metal = IdeaStartapper.objects.all()
     if request.method == "POST" and request.FILES:
         title    = request.POST['title']
         description = request.POST['description']
