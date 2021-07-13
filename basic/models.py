@@ -53,7 +53,7 @@ class Startapper(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,related_name='startapper')
     bio = models.TextField(default="no bio...", max_length=400, null=True)
     country = models.ForeignKey(Country, models.CASCADE, null=True, blank=True)
-    image = models.ImageField(upload_to='startapper_file/startapp_image', blank=True, null=True)
+    image = models.ImageField(upload_to='startappper_image/', blank=True, null=True)
 
     def __str__(self):
         return str(self.user) #full_name qaytarishi uchun string tipiga o`zgartirildi
@@ -63,7 +63,7 @@ class Staff(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bio = models.TextField(default="no bio...", max_length=400)
     country = models.ForeignKey(Country, models.CASCADE, null=True, blank=True)
-    image = models.ImageField(upload_to='staff_image', blank=True, null=True)
+    image = models.ImageField(upload_to='staff_image/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.user} ---/--- {self.user.user_type}"
@@ -73,18 +73,18 @@ class IdeaStartapper(models.Model):
     user = models.ForeignKey(Startapper, on_delete=models.CASCADE, )
     title = models.CharField(max_length=100)
     description = models.TextField()
-    file = models.FileField(upload_to='media/startapper_idea', blank=True, null=True)
+    file = models.FileField(upload_to='startapper_idea/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.user.username}  - {self.file}"
+        return f"{self.user.user}  ---/--- {self.title}"
 
 
 class AllUsersIdea(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, )
     title = models.CharField(max_length=255)
     description = models.TextField()
-    file = models.FileField(upload_to='media/alluser_ideas', blank=True, null=True)
+    file = models.FileField(upload_to='alluser_ideas/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -101,7 +101,7 @@ class ApplicationStaff(models.Model):
     user = models.ForeignKey(Staff, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField()
-    resume = models.FileField(upload_to='media_staff_resume', blank=True, null=True)
+    resume = models.FileField(upload_to='media_staff_resume/', blank=True, null=True)
     work_type = models.CharField(max_length=10, choices=ONOFF)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -114,7 +114,7 @@ class SuccessProject(TranslatableModel):
         title=models.CharField(max_length=255, null=True),
         description=models.TextField(null=True, blank=True)
     )
-    image = models.ImageField(upload_to='projects_photo', null=True)
+    image = models.ImageField(upload_to='projects_photo/', null=True)
     url = models.URLField(max_length=255)
 
 
@@ -138,7 +138,7 @@ class AboutUS(TranslatableModel):
         post_title=models.CharField(max_length=255),
         post_description=models.TextField(null=True)
     )
-    post_image = models.ImageField(upload_to='about_us')
+    post_image = models.ImageField(upload_to='about_us/')
 
     def __str__(self):
         return self.safe_translation_getter('post_title')
