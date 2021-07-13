@@ -3,7 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
@@ -131,3 +132,15 @@ def startapper_account(request):
             c_form.save()
             s_form.save()
         return render(request, 'index.html')
+
+
+class announcementView(DetailView):
+    model = IdeaStartapper
+    template_name = 'idea_detail_startapper.html'
+    success_url = reverse_lazy('announcement')
+    context_object_name = 'object'
+    login_url = 'login'  # new
+
+    # def test_func(self):
+    #     obj = self.get_object()
+    #     return obj.author == self.request.user

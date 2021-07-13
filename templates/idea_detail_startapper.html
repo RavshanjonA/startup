@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} StartApper Page {% endblock %}
+{% block body %}
+    <section>
+
+        <div class="container">
+            <div class="row d-flex">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h3>{{ object.title}}</h3>
+                        <h5>Description: {{ object.description}}</h5>
+                        <hr>
+                        <p>Download: <a href="{{ object.file.url }}">{{ object.file }}</a></p>
+                        <p>create at: {{ object.created_at|date:"d M Y" }}</p>
+                        <hr>
+                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+
+
