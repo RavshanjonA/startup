@@ -20,6 +20,21 @@
             </div>
             <button type="submit" class="btn btn-primary" style="font-size: medium;">Add announcements</button>
         </form>
-
+    </div>
+    <div class="container">
+    <div class="row d-flex">
+        {% for idea in idea_startapper %}
+            <div class="card m-2" style="width: 18rem;">
+                <div class="card-body">
+                    <h3>{{ idea.title | truncatechars:80 }}</h3>
+                    <h5>Description: {{ idea.description | truncatechars:250}}</h5><hr>
+                    <p>Download: <a href="{{ idea.file.url }}">{{ idea.file }}</a></p>
+                    <p>create at: {{ idea.created_at|date:"d M Y" }}</p><hr>
+                    <a href="#" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+</div>
     </div>
 {% endblock %}

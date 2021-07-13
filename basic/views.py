@@ -98,6 +98,7 @@ def logout_user(request):
 @login_required
 def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
+    idea_startapper = IdeaStartapper.objects.filter(user=startapper).order_by('-created_at')[:6]
     if request.method == "POST" and request.FILES:
         title = request.POST['title']
         description = request.POST['description']
@@ -110,9 +111,9 @@ def announcement(request):
         )
         elonlar.save()
         messages.info(request, "Your announcement successfully created!")
-        return redirect('/')
+        return render(request, 'index.html', {'idea_startapper': idea_startapper})
     else:
-        return render(request, 'announcement.html')
+        return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
 
 def startapper_account(request):
