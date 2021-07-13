@@ -77,14 +77,16 @@ def index(request):
 def login_user(request):
     if request.method == 'GET':
         user = LoginForm()
-        return render(request, 'account/login.html', {'form':user})
+        return render(request, 'account/login.html', {'form': user})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'account/login.html', {'form':LoginForm(), 'error':'Login yoki parol xato kiritildi!'})
+            return render(request, 'account/login.html',
+                          {'form': LoginForm(), 'error': 'Login yoki parol xato kiritildi!'})
         else:
             login(request, user)
             return render(request, 'index.html')
+
 
 @login_required
 def logout_user(request):
@@ -98,15 +100,15 @@ def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
     metal = IdeaStartapper.objects.all()
     if request.method == "POST" and request.FILES:
-        title    = request.POST['title']
+        title = request.POST['title']
         description = request.POST['description']
-        file       = request.FILES.get('file')
+        file = request.FILES.get('file')
         elonlar = IdeaStartapper(
-                title = title,
-                description = description,
-                file = file,
-                user = startapper
-                )
+            title=title,
+            description=description,
+            file=file,
+            user=startapper
+        )
         elonlar.save()
         messages.info(request, "Your announcement successfully created!")
         return redirect('/')
@@ -121,7 +123,7 @@ def startapper_account(request):
     startappForm = StartapperAccountForm(instance=startapper)
 
     if request.method == 'GET':
-        return render(request, 'account/startapper_account.html',{"obj": customForm,'form':startappForm})
+        return render(request, 'account/startapper_account.html', {"obj": customForm, 'form': startappForm})
     else:
         s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
         c_form = SimpleCustomForm(request.POST, request.FILES, instance=startapper)
@@ -129,4 +131,3 @@ def startapper_account(request):
             c_form.save()
             s_form.save()
         return render(request, 'index.html')
-

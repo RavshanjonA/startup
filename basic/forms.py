@@ -6,8 +6,11 @@ from .models import *
 
 
 class CustomUserForm(UserCreationForm):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password1', 'placeholder':'enter the password...'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mt-2', 'name':'password2', 'placeholder':'Repeat the password...'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control mt-2', 'name': 'password1', 'placeholder': 'enter the password...'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control mt-2', 'name': 'password2', 'placeholder': 'Repeat the password...'}))
+
     class Meta:
         model = CustomUser
         fields = ('full_name', 'email', 'user_type', 'phone', 'password1', 'password2', 'username')
@@ -21,24 +24,30 @@ class CustomUserForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = UsernameField(label=("Login"), widget=forms.TextInput(attrs={'class':'form-control text-dark', 'placeholder':'loginni kiriting...', 'autofocus':True}))
-    password = forms.CharField(label=("Parol"),strip=False, widget=forms.PasswordInput(attrs={'autofocus':'current-password','class':'form-control text-dark', 'placeholder':'parolni kiriting...'}))
+    username = UsernameField(label=("Login"), widget=forms.TextInput(
+        attrs={'class': 'form-control text-dark', 'placeholder': 'loginni kiriting...', 'autofocus': True}))
+    password = forms.CharField(label=("Parol"), strip=False, widget=forms.PasswordInput(
+        attrs={'autofocus': 'current-password', 'class': 'form-control text-dark',
+               'placeholder': 'parolni kiriting...'}))
+
     class Meta:
         model = login
         fields = "__all__"
 
 
-
 class SimpleCustomForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ( 'username', 'full_name', 'email', 'user_type', 'phone')
-        labels = {'username':'Username', 'full_name':'full_name', 'email':'email', 'user_type':'user_type','phone':'phone'}
+        fields = ('username', 'full_name', 'email', 'user_type', 'phone')
+        labels = {'username': 'Username', 'full_name': 'full_name', 'email': 'email', 'user_type': 'user_type',
+                  'phone': 'phone'}
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control mt-2 disabled', 'name': 'username','disabled':'username'}),
+            'username': forms.TextInput(
+                attrs={'class': 'form-control mt-2 disabled', 'name': 'username', 'disabled': 'username'}),
             'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control mt-2', 'name': 'email'}),
-            'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type','disabled':'user_type'}),
+            'user_type': forms.Select(
+                attrs={'class': 'form-control mt-2', 'name': 'user_type', 'disabled': 'user_type'}),
             'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
         }
 
@@ -46,32 +55,19 @@ class SimpleCustomForm(UserCreationForm):
 class StartapperAccountForm(forms.ModelForm):
     class Meta:
         model = Startapper
-        fields = ['user', 'bio','country','image',]
-        labels = {'user':'Full name','bio':'Bio', 'country':'Country','image':'image'}
-        widgets = {'user':forms.TextInput(attrs={'class':'form-control'}),
-                    'bio':forms.Textarea(attrs={'class':'form-control'}),
-                    'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
-                    }
+        fields = ['user', 'bio', 'country', 'image', ]
+        labels = {'user': 'Full name', 'bio': 'Bio', 'country': 'Country', 'image': 'image'}
+        widgets = {'user': forms.TextInput(attrs={'class': 'form-control'}),
+                   'bio': forms.Textarea(attrs={'class': 'form-control'}),
+                   'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
+                   }
 
 
 class IdeaStartApperForm(forms.ModelForm):
     class Meta:
         model = IdeaStartapper
-        fields = ['title','description','file']
-        labels = {'title':'Title', 'description':'Description', 'file':'file'}
-
-
-
-
-
-
-
-
-
-
-
-
-
+        fields = ['title', 'description', 'file']
+        labels = {'title': 'Title', 'description': 'Description', 'file': 'file'}
 
 
 

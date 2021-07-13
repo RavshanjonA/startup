@@ -3,23 +3,24 @@
 {% block title %} Announcement page {% endblock %}
 {% block body %}
 
-<div class="container">
+    <div class="container">
         <form action="{% url 'announcement' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
+            {% csrf_token %}
+            <div class="row">
                 <div class="col-12 form-group" id="left">
-                        
-                        <label for="title">title</label>
-                        <input type="text" class="form-control" name="title" id="title" required>
-                        <label for="description">description</label>
-                        <textarea class="form-control" name="description" id="description" required cols="30" rows="10"></textarea>
 
-                        <label for="file">File</label>
-                        <input type="file" class="form-control " name="file" id="file" required>
+                    <label for="title">title</label>
+                    <input type="text" class="form-control" name="title" id="title" required>
+                    <label for="description">description</label>
+                    <textarea class="form-control" name="description" id="description" required cols="30"
+                              rows="10"></textarea>
+
+                    <label for="file">File</label>
+                    <input type="file" class="form-control " name="file" id="file" required>
                 </div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="font-size: medium;">E'lon yaratish</button>
+            </div>
+            <button type="submit" class="btn btn-primary" style="font-size: medium;">E'lon yaratish</button>
         </form>
 
-</div>
+    </div>
 {% endblock %}
