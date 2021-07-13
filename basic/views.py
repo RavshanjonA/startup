@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
 from basic.models import CustomUser, Startapper, Staff, IdeaStartapper
@@ -48,8 +49,6 @@ def register(request):
                 if user_type.user_type == CustomUser.STARTAPPER:
                     startapper = Startapper.objects.create(user=user)
                     startapper.save()
-                    idea = IdeaStartapper.objects.create(user=startapper)
-                    idea.save()
                     return render(request, 'startapper.html')
                 if user_type.user_type == CustomUser.DEVELOPER:
                     Staff.objects.create(user=user).save()
@@ -87,13 +86,14 @@ def login_user(request):
             login(request, user)
             return render(request, 'index.html')
 
-
+@login_required
 def logout_user(request):
     logout(request)
     return render(request, 'index.html')
 
 
-
+#
+@login_required
 def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
     metal = IdeaStartapper.objects.all()
@@ -108,6 +108,7 @@ def announcement(request):
                 user = startapper
                 )
         elonlar.save()
+        messages.info(request, "Your announcement successfully created!")
         return redirect('/')
     else:
         return render(request, 'announcement.html')

@@ -77,7 +77,7 @@ class IdeaStartapper(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.user}  ---/--- {self.title}"
+        return f"{self.user}  ---/--- {self.title}"
 
 
 class AllUsersIdea(models.Model):

@@ -3,6 +3,11 @@
 
 {% block title %} Home Page {% endblock %}
 {% block body %}
+  {% for m in messages %}
+    <div class="alert alert-success" role="alert">
+      {{ m }}
+    </div>
+  {% endfor %}
   <section id="hero">
     <div class="hero-container">
       <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -462,6 +467,7 @@
 
       </div>
     </section><!-- End Our Team Section -->
+      
 
     <!-- ======= Frequently Asked Questions Section ======= -->
     <section id="faq" class="faq section-bg">
