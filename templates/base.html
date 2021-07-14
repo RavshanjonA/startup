@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>{% block title  %} Mamba Bootstrap Template - Index {% endblock %}</title>
+    <title>{% block title %} Mamba Bootstrap Template - Index {% endblock %}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -72,10 +72,16 @@
             <ul>
                 <li class="active"><a href="{% url 'home' %}">Home</a></li>
                 {% if not user.is_authenticated %}
-                <li><a href="{% url 'register' %}">Register</a></li>
-                <li><a href="{% url 'login_user' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'login_user' %}">Login</a></li>
                 {% endif %}
-                <li><a href="{% url 'announcement' %}">Announcement</a></li>
+                {% if request.user.user_type == 'Developer' %}
+                    <li><a href="{% url 'developer' %}">{{ user.username }}</a></li>
+                {% elif request.user.user_type == 'Startapper' %}
+                    <li><a href="{% url 'announcement' %}">{{ user.username }}</a></li>
+                {% elif request.user.user_type == 'Practitioner' %}
+                    <li><a href="{% url 'practitioner' %}">{{ user.username }}</a></li>
+                {% endif %}
                 <li><a href="#services">Services</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#team">Team</a></li>
@@ -98,8 +104,8 @@
                 </li>
                 <li><a href="#contact">Contact Us</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
-                <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
+                    <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
+                    <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
                 {% endif %}
 
             </ul>

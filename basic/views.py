@@ -50,13 +50,13 @@ def register(request):
                 if user_type.user_type == CustomUser.STARTAPPER:
                     startapper = Startapper.objects.create(user=user)
                     startapper.save()
-                    return render(request, 'startapper.html')
+                    return redirect('startapper')
                 if user_type.user_type == CustomUser.DEVELOPER:
                     Staff.objects.create(user=user).save()
-                    return render(request, 'developer.html')
+                    return redirect('developer')
                 if user_type.user_type == CustomUser.PRACTITIONER:
                     Staff.objects.create(user=user).save()
-                    return render(request, 'practitioner.html')
+                    return redirect('practitioner')
         else:
             messages.info(request, "Parollar bir biriga to'g'ri kelmaydi !!!")
             return redirect('/')
@@ -116,6 +116,7 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
+
 # startapper_account by function based view
 # def startapper_account(request):
 #     startapper = Startapper.objects.get(user=request.user)
@@ -165,3 +166,18 @@ def announcement_delete(request, id):
     if request.method == "POST":
         ann.delete()
         return redirect('home')
+
+
+def developer_home(request):
+    developer = Staff.objects.get(user=request.user)
+    return render(request, 'developer.html', {'developer': developer})
+
+
+def startapper_home(request):
+    startapper = Staff.objects.get(user=request.user)
+    return render(request, 'startapper.html', {'startapper': startapper})
+
+
+def practitioner_home(request):
+    practitioner = Staff.objects.get(user=request.user)
+    return render(request, 'practitioner.html', {'practitioner': practitioner})
