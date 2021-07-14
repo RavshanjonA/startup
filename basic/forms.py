@@ -55,11 +55,12 @@ class SimpleCustomForm(UserCreationForm):
 class StartapperAccountForm(forms.ModelForm):
     class Meta:
         model = Startapper
-        fields = ['user', 'bio', 'country', 'image', ]
+        fields = ['bio', 'country', 'image', ]
         labels = {'user': 'Full name', 'bio': 'Bio', 'country': 'Country', 'image': 'image'}
         widgets = {'user': forms.TextInput(attrs={'class': 'form-control'}),
                    'bio': forms.Textarea(attrs={'class': 'form-control'}),
                    'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
+
                    }
 
 

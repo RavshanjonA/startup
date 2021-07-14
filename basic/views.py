@@ -3,8 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
@@ -95,7 +95,7 @@ def logout_user(request):
     return render(request, 'index.html')
 
 
-#create announcement
+# create announcement
 @login_required
 def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
@@ -116,35 +116,48 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
+# startapper_account by function based view
+# def startapper_account(request):
+#     startapper = Startapper.objects.get(user=request.user)
+#     print(startapper,'startapper+++++++++++++++++')
+#     startappForm = StartapperAccountForm(instance=startapper)
+#     print(startappForm,'startapperForm+++++++++++++++++')
+#
+#     if request.method == 'GET':
+#         return render(request, 'account/startapper_account.html', {'form': startappForm})
+#     else:
+#         s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
+#         print(s_form, 's_form +++++++++++++++++')
+#         if s_form.is_valid():
+#             s_form.save()
+#         return render(request, 'index.html')
 
-def startapper_account(request):
-    user = CustomUser.objects.get(username=request.user.username)
-    print(user,'user++++++++++++++')
-    customForm = SimpleCustomForm(instance=request.user)
-    # print(customForm,'customform-------------------')
-    startapper = Startapper.objects.get(user=request.user)
-    print(startapper,'startapper+++++++++++++++++')
-    startappForm = StartapperAccountForm(instance=startapper)
-    # print(startappForm,'startapperForm+++++++++++++++++')
+# startapper_account by class based view
+class startapper_update(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        startapper = Startapper.objects.get(user=self.request.user)
+        form = StartapperAccountForm(instance=startapper)
+        login_url = 'login'
+        context = {'form': form}
+        return render(request, 'account/startapper_account.html', context)
 
-    if request.method == 'GET':
-        return render(request, 'account/startapper_account.html', {"obj": customForm, 'form': startappForm})
-    else:
-        s_form = StartapperAccountForm(request.POST, request.FILES, instance=startapper)
-        c_form = SimpleCustomForm(request.POST, request.FILES, instance=startapper)
-        if s_form.is_valid() and c_form:
-            c_form.save()
-            s_form.save()
-        return render(request, 'index.html')
+    def post(self, request, *args, **kwargs):
+        form = StartapperAccountForm(self.request.POST, self.request.FILES, instance=self.request.user.startapper)
+        if form.is_valid():
+            form.save()
+            messages.info(self.request, "Your announcement successfully created!")
+            return redirect(reverse('startapper_account'))
+        return redirect('home')
 
 
-#announcement detail
+# announcement detail
 class announcementView(DetailView):
     model = IdeaStartapper
     template_name = 'idea_detail_startapper.html'
     success_url = reverse_lazy('announcement')
     context_object_name = 'object'
     login_url = 'login'  # new
+
 
 @login_required
 def announcement_delete(request, id):
