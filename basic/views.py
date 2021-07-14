@@ -1,7 +1,7 @@
 from django.contrib import messages, auth
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
@@ -95,7 +95,7 @@ def logout_user(request):
     return render(request, 'index.html')
 
 
-#
+#create announcement
 @login_required
 def announcement(request):
     startapper = Startapper.objects.get(user=request.user)
@@ -119,9 +119,13 @@ def announcement(request):
 
 def startapper_account(request):
     user = CustomUser.objects.get(username=request.user.username)
-    customForm = SimpleCustomForm(instance=user)
+    print(user,'user++++++++++++++')
+    customForm = SimpleCustomForm(instance=request.user)
+    # print(customForm,'customform-------------------')
     startapper = Startapper.objects.get(user=request.user)
+    print(startapper,'startapper+++++++++++++++++')
     startappForm = StartapperAccountForm(instance=startapper)
+    # print(startappForm,'startapperForm+++++++++++++++++')
 
     if request.method == 'GET':
         return render(request, 'account/startapper_account.html', {"obj": customForm, 'form': startappForm})
@@ -134,6 +138,7 @@ def startapper_account(request):
         return render(request, 'index.html')
 
 
+#announcement detail
 class announcementView(DetailView):
     model = IdeaStartapper
     template_name = 'idea_detail_startapper.html'
@@ -141,6 +146,9 @@ class announcementView(DetailView):
     context_object_name = 'object'
     login_url = 'login'  # new
 
-    # def test_func(self):
-    #     obj = self.get_object()
-    #     return obj.author == self.request.user
+@login_required
+def announcement_delete(request, id):
+    ann = get_object_or_404(IdeaStartapper, pk=id)
+    if request.method == "POST":
+        ann.delete()
+        return redirect('home')
