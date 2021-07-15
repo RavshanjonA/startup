@@ -11,7 +11,7 @@ urlpatterns = [
     path('developer/', developer_home, name='developer'),
     path('startapper/', startapper_home, name='startapper'),
     path('practitioner/', practitioner_home, name='practitioner'),
-    path('startapper/', startapper_update.as_view(), name='startapper_account'),
+    path('startapper/account/', startapper_update.as_view(), name='startapper_account'),
     path('announcement/<int:pk>/', announcementView.as_view(), name='idea_detail_startapper'),
     path('<int:id>/delete/', announcement_delete, name='ann-delete'),
 
