@@ -4,11 +4,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 
-from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, IdeaStartApperForm
-from basic.models import CustomUser, Startapper, Staff, IdeaStartapper
+from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
+    IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm
+from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff
 from django.views.generic import CreateView
 
 
@@ -168,9 +170,32 @@ def announcement_delete(request, id):
         return redirect('home')
 
 
+@login_required
 def developer_home(request):
     developer = Staff.objects.get(user=request.user)
-    return render(request, 'developer.html', {'developer': developer})
+    if request.method == "POST":
+        form = ApplicationDeveloperForm(request.POST, request.FILES)
+        if form.is_valid():
+            current_user = Staff.objects.get(user=request.user)
+            data = ApplicationStaff()
+            data.title = form.cleaned_data['title']
+            data.description = form.cleaned_data['description']
+            try:
+                data.resume = request.FILES['resume']
+            except MultiValueDictKeyError:
+                messages.warning(request, 'resume where?')
+                return redirect('developer')
+            data.work_type = form.cleaned_data['work_type']
+            data.user = current_user
+            data.save()
+            messages.success(request, 'Successfully send!')
+            return redirect('developer')
+        else:
+            messages.warning(request, 'Announcement error!')
+            return redirect('developer')
+    form = ApplicationDeveloperForm()
+    obj = ApplicationStaff.objects.filter(user=developer)
+    return render(request, 'developer.html', {'developer': developer, 'form': form, 'obj': obj})
 
 
 def startapper_home(request):
@@ -180,4 +205,22 @@ def startapper_home(request):
 
 def practitioner_home(request):
     practitioner = Staff.objects.get(user=request.user)
-    return render(request, 'practitioner.html', {'practitioner': practitioner})
+    if request.method == "POST":
+        form = ApplicationPractitionerForm(request.POST, request.FILES)
+        if form.is_valid():
+            current_user = Staff.objects.get(user=request.user)
+            data = ApplicationStaff()
+            data.title = form.cleaned_data['title']
+            data.description = form.cleaned_data['description']
+            data.resume = form.cleaned_data['resume']
+            data.work_type = form.cleaned_data['work_type']
+            data.user = current_user
+            data.save()
+            messages.success(request, 'Successfully send message!')
+            return redirect('practitioner')
+        else:
+            messages.warning(request, 'Application error!')
+            return redirect('practitioner')
+    form = ApplicationPractitionerForm()
+    obj = ApplicationStaff.objects.filter(user=practitioner)
+    return render(request, 'practitioner.html', {'practitioner': practitioner, 'form': form, 'obj': obj})

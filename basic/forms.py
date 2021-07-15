@@ -71,6 +71,32 @@ class IdeaStartApperForm(forms.ModelForm):
         labels = {'title': 'Title', 'description': 'Description', 'file': 'file'}
 
 
+class ApplicationDeveloperForm(forms.ModelForm):
+    class Meta:
+        file = forms.FileField()
+        model = ApplicationStaff
+        fields = ['title', 'description', 'resume', 'work_type']
+
+        widgets = {
+            'work_type': forms.Select(
+                attrs={'class': "form-control"}
+            )
+        }
+        labels = {'title': 'Title', 'description': 'description', 'resume': 'resume'}
+
+
+class ApplicationPractitionerForm(forms.ModelForm):
+    class Meta:
+        model = ApplicationStaff
+        fiele = forms.FileField()
+        fields = ['title', 'description', 'resume', 'work_type']
+
+        widgets = {
+            'work_type': forms.Select(
+                attrs={'class': "form-control"}
+            )
+        }
+        labels = {'title': 'Title', 'description': 'description', 'resume': 'resume'}
 
 # class CustomUserForm(UserCreationForm):
 #     class Meta:
