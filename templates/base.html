@@ -78,7 +78,8 @@
                 {% if request.user.user_type == 'Developer' %}
                     <li><a href="{% url 'developer' %}">{{ user.username }}</a></li>
                 {% elif request.user.user_type == 'Startapper' %}
-                    <li><a href="{% url 'announcement' %}">{{ user.username }}</a></li>
+                    <li><a href="{% url 'startapper' %}">{{ user.username }}</a></li>
+                    <li><a href="{% url 'announcement' %}">Announcement</a></li>
                 {% elif request.user.user_type == 'Practitioner' %}
                     <li><a href="{% url 'practitioner' %}">{{ user.username }}</a></li>
                 {% endif %}

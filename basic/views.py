@@ -174,7 +174,7 @@ def developer_home(request):
 
 
 def startapper_home(request):
-    startapper = Staff.objects.get(user=request.user)
+    startapper = Startapper.objects.get(user=request.user)
     return render(request, 'startapper.html', {'startapper': startapper})
 
 
