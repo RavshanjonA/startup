@@ -157,7 +157,6 @@ class Startapper_update(LoginRequiredMixin, View):
 
 class Developer_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        print(self.request.user,'++++++++++++++++++++++++++++++++')
         developer = Staff.objects.get(user=self.request.user)
         form = DeveloperAccountorm(instance=developer)
         login_url = 'login'
@@ -166,13 +165,10 @@ class Developer_update(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = DeveloperAccountorm(self.request.POST, self.request.FILES, instance=self.request.user.staff)
-        print(form, '--------------------------')
         if form.is_valid():
             form.save()
-            print(form, '--------------------------')
-            messages.info(self.request, "ytttttttttttttour application has been successfully created!")
+            messages.info(self.request, "Your application has been successfully created!")
             return redirect(reverse('developer_update'))
-
 
 
 # announcement detail
@@ -248,7 +244,7 @@ def practitioner_home(request):
     return render(request, 'practitioner.html', {'practitioner': practitioner, 'form': form, 'obj': obj})
 
 
-#All User Idea create
+# All User Idea create
 class AllUserIdea(generic.CreateView):
     model = AllUsersIdea
     template_name = None
