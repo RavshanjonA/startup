@@ -98,6 +98,13 @@ class ApplicationPractitionerForm(forms.ModelForm):
         }
         labels = {'title': 'Title', 'description': 'description', 'resume': 'resume'}
 
+
+class AllUserIdeaForm(forms.ModelForm):
+    class Meta:
+        model = AllUsersIdea
+        exclude = ('user', 'created_at')
+
+
 # class CustomUserForm(UserCreationForm):
 #     class Meta:
 #         model = CustomUser

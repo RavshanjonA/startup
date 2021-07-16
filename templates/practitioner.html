@@ -133,9 +133,9 @@
                             <h5>Description: {{ idea.description | truncatechars:250 }}</h5>
                             <hr>
                             {% if idea.resume %}
-                            <p>Download: <a href="{{ idea.resume.url }}">{{ idea.resume }}</a></p>
+                                <p>Download: <a href="{{ idea.resume.url }}">{{ idea.resume }}</a></p>
                             {% else %}
-                            <p>Not rezume Pratitioner</p>
+                                <p>Not rezume Pratitioner</p>
                             {% endif %}
                             <p>create at: {{ idea.created_at|date:"d M Y" }}</p>
                             <hr>
@@ -145,23 +145,22 @@
 
 
 
+                <section class="container">
+                    <h2>Create your idea. Practitioner{{ request.user.username }}</h2>
 
 
+                    <form action="{% url 'ideasave' %}" enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        <label for="title">Title</label>
+                        <input type="text" name="title"><br>
+                        <label for="description">Description</label>
+                        <input type="text" name="description"><br>
+                        <label for="file">File</label>
+                        <input type="file" name="file"><br>
+                        <button type="submit">SEND</button>
+                    </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                </section>
 
 
                 <!-- ======= About Lists Section ======= -->

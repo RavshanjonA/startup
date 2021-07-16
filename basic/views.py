@@ -1,17 +1,19 @@
 from django.contrib import messages, auth
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.utils.datastructures import MultiValueDictKeyError
+from django.views import generic
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
     IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm
-from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff
+from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea
 from django.views.generic import CreateView
+from .forms import AllUserIdeaForm
 
 
 def register(request):
@@ -224,3 +226,42 @@ def practitioner_home(request):
     form = ApplicationPractitionerForm()
     obj = ApplicationStaff.objects.filter(user=practitioner)
     return render(request, 'practitioner.html', {'practitioner': practitioner, 'form': form, 'obj': obj})
+
+
+#
+# def alluseridea(request):
+#     url = request.META.get('HTTP_REFERER')
+#     current_user = CustomUser.objects.get(username=request.user.username)
+#     if request.method == "POST":
+#         form = IdeaStaffForm(request.POST, request.FILES)
+#         form.user = request.user
+#         if form.is_valid():
+#             form.save()
+#             data = AllUsersIdea()
+#             data.title = form.cleaned_data['title']
+#             data.description = form.cleaned_data['description']
+#             if request.FILES:
+#                 data.file = request.FILES['file']
+#             else:
+#                 data.file = form.cleaned_data['file']
+#             data.user = current_user
+#             data.save()
+#             return HttpResponseRedirect(url)
+#     form = IdeaStaffForm()
+#     return HttpResponseRedirect(url, {'form': form})
+
+
+class AllUserIdea(generic.CreateView):
+    model = AllUsersIdea
+    template_name = None
+    form_class = AllUserIdeaForm
+
+    def post(self, request, *args, **kwargs):
+        url = request.META.get('HTTP_REFERER')
+        form = self.form_class(self.request.POST, self.request.FILES)
+        form.instance.user = self.request.user
+        if form.is_valid():
+            form.save()
+            return redirect(url)
+        messages.error(self.request, "Forma tuliq bulmadi")
+        return redirect(url)
