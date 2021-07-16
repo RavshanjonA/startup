@@ -63,7 +63,7 @@
     <div class="container">
 
         <div class="logo float-left">
-            <h1 class="text-light"><a href="index.html"><span>Mamba</span></a></h1>
+            <h1 class="text-light"><a href="{% url 'home' %}"><span>Mamba</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="% static 'assets/img/logo.png' %}"' %} alt="" class="img-fluid"></a>-->
         </div>
@@ -106,7 +106,7 @@
                 <li><a href="#contact">Contact Us</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout_user' %}">CHIQISH</a></li>
-                    <li><a href="{% url 'startapper_account' %}">ACCOUNT</a></li>
+                    <li><a {% if request.user.user_type == 'Developer' %} href="{% url 'developer_update' %}" {% elif request.user.user_type == 'Startapper' %} href="{% url 'startapper_account' %}" {% endif %}>ACCOUNT</a></li>
                 {% endif %}
 
             </ul>

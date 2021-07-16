@@ -63,6 +63,16 @@ class StartapperAccountForm(forms.ModelForm):
 
                    }
 
+class DeveloperAccountorm(forms.ModelForm):
+    class Meta:
+        model = Staff
+        fields = ['bio', 'country', 'image', ]
+        labels = {'user': 'Full name', 'bio': 'Bio', 'country': 'Country', 'image': 'image'}
+        widgets = {'user': forms.TextInput(attrs={'class': 'form-control'}),
+                   'bio': forms.Textarea(attrs={'class': 'form-control'}),
+                   'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
+
+                   }
 
 class IdeaStartApperForm(forms.ModelForm):
     class Meta:
@@ -104,6 +114,18 @@ class AllUserIdeaForm(forms.ModelForm):
         model = AllUsersIdea
         exclude = ('user', 'created_at')
 
+
+# class DeveloperApplicationForm(forms.ModelForm):
+#     class Meta:
+#         model = ApplicationStaff
+#         fields = ['title', 'description', 'resume', 'work_type']
+#         labels = {'title': 'Title', 'description': 'Description', 'resume': 'Resume', 'work_type': 'Work_type'}
+#         widgets = {'title': forms.TextInput(attrs={'class': 'form-control'}),
+#                    'description': forms.Textarea(attrs={'class': 'form-control'}),
+#                    'resume': forms.FileInput(attrs={'class': 'form-control'}),
+#                    'work_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'work_type'}),
+#
+#                    }
 
 # class CustomUserForm(UserCreationForm):
 #     class Meta:

@@ -1,0 +1,63 @@
+888857489982889882876889
+
+API:
+1.model yaratiladi
+2.api app yaratilinadi
+3.serializers.py yaratilinadi (from rest_framework import  serializers)
+4.api/views.py yaratilinadi (from rest_framework import  generics)
+5.api/url.py yaratiladi
+
+
+
+1  358051090489478
+358051090489486
+https://jmovideon.xyz/492270165123045/
+https://jmovideon.xyz/492270165123045/
+L: sardorbek_1991
+P: s727367*
+
+ukwork.com
+L: Sardor_Uktamov
+
+
+
+ORM - "Object-Relational Mapping".
+
+www.frilance.com
+L: SardorbekUktamov
+P: s727367*
+
+https://www.youtube.com/embed/7KtlRGPYn5E
+r3d.uz
+L: s_uktamov
+P: s727367
+
+SET SQL_SAFE_UPDATES = 0;
+
+echo "# rishtondxm" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/sardoruktamov/rishtondxm.git
+git push -u origin main
+
+https://educator.uz/courses/django-rest-api/#
+L: s_uktamov
+P: s727367
+
+mail.ru 
+L: test-for-uktamov@mail.ru
+P: test727367
+
+https://www.linkedin.com/in/khojarbu-khaitmetova-3977b415a/
+
+heroku.com---------------
+login: sardorbek.uktamov.1@gmail.com
+parol: s727367.
+C:\Users\Asus\env\lib\site-packages\django\contrib\admin\templates\admin\includes\
+
+
+https://lucid.app/
+login: sardorbek.uktamov.1@gmail.com
+parol: s727367.

@@ -13,7 +13,7 @@ from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, Simple
     IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm
 from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea
 from django.views.generic import CreateView
-from .forms import AllUserIdeaForm
+from .forms import AllUserIdeaForm, DeveloperAccountorm
 
 
 def register(request):
@@ -138,10 +138,10 @@ def announcement(request):
 #         return render(request, 'index.html')
 
 # startapper_account by class based view
-class startapper_update(LoginRequiredMixin, View):
+class Startapper_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        startapper = Startapper.objects.get(user=self.request.user)
-        form = StartapperAccountForm(instance=startapper)
+        startapper_ = Startapper.objects.get(user=self.request.user)
+        form = StartapperAccountForm(instance=startapper_)
         login_url = 'login'
         context = {'form': form}
         return render(request, 'account/startapper_account.html', context)
@@ -153,6 +153,26 @@ class startapper_update(LoginRequiredMixin, View):
             messages.info(self.request, "Your announcement successfully created!")
             return redirect(reverse('startapper_account'))
         return redirect('home')
+
+
+class Developer_update(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        print(self.request.user,'++++++++++++++++++++++++++++++++')
+        developer = Staff.objects.get(user=self.request.user)
+        form = DeveloperAccountorm(instance=developer)
+        login_url = 'login'
+        context = {'form': form}
+        return render(request, 'account/dev_account.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = DeveloperAccountorm(self.request.POST, self.request.FILES, instance=self.request.user.staff)
+        print(form, '--------------------------')
+        if form.is_valid():
+            form.save()
+            print(form, '--------------------------')
+            messages.info(self.request, "ytttttttttttttour application has been successfully created!")
+            return redirect(reverse('developer_update'))
+
 
 
 # announcement detail
@@ -228,29 +248,7 @@ def practitioner_home(request):
     return render(request, 'practitioner.html', {'practitioner': practitioner, 'form': form, 'obj': obj})
 
 
-#
-# def alluseridea(request):
-#     url = request.META.get('HTTP_REFERER')
-#     current_user = CustomUser.objects.get(username=request.user.username)
-#     if request.method == "POST":
-#         form = IdeaStaffForm(request.POST, request.FILES)
-#         form.user = request.user
-#         if form.is_valid():
-#             form.save()
-#             data = AllUsersIdea()
-#             data.title = form.cleaned_data['title']
-#             data.description = form.cleaned_data['description']
-#             if request.FILES:
-#                 data.file = request.FILES['file']
-#             else:
-#                 data.file = form.cleaned_data['file']
-#             data.user = current_user
-#             data.save()
-#             return HttpResponseRedirect(url)
-#     form = IdeaStaffForm()
-#     return HttpResponseRedirect(url, {'form': form})
-
-
+#All User Idea create
 class AllUserIdea(generic.CreateView):
     model = AllUsersIdea
     template_name = None
