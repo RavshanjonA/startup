@@ -16,6 +16,7 @@ from django.views.generic import CreateView
 from .forms import AllUserIdeaForm, DeveloperAccountorm
 
 
+#users registration
 def register(request):
     if request.method == 'POST':
         full_name = request.POST['full_name']
@@ -120,7 +121,7 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
-
+# startapper_account by class based view
 # startapper_account by function based view
 # def startapper_account(request):
 #     startapper = Startapper.objects.get(user=request.user)
@@ -155,6 +156,8 @@ class Startapper_update(LoginRequiredMixin, View):
         return redirect('home')
 
 
+# change additional information about the developer and practitioner
+@login_required
 class Developer_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         developer = Staff.objects.get(user=self.request.user)
@@ -180,6 +183,7 @@ class announcementView(DetailView):
     login_url = 'login'  # new
 
 
+#delete given ads
 @login_required
 def announcement_delete(request, id):
     ann = get_object_or_404(IdeaStartapper, pk=id)
@@ -188,6 +192,7 @@ def announcement_delete(request, id):
         return redirect('home')
 
 
+#developers leave an application
 @login_required
 def developer_home(request):
     developer = Staff.objects.get(user=request.user)
@@ -221,6 +226,8 @@ def startapper_home(request):
     return render(request, 'startapper.html', {'startapper': startapper})
 
 
+#developers leave an application
+@login_required()
 def practitioner_home(request):
     practitioner = Staff.objects.get(user=request.user)
     if request.method == "POST":
