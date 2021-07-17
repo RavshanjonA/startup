@@ -171,7 +171,7 @@ class Startapper_update(LoginRequiredMixin, View):
             return redirect(reverse('startapper_account'))
         return redirect('home')
 
-class AllUserUpdate(LoginRequiredMixin, View):
+class AllUserUpdate(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         alluser = CustomUser.objects.get(username=self.request.user.username)
         form = CustomUserForm(instance=alluser)
@@ -179,11 +179,12 @@ class AllUserUpdate(LoginRequiredMixin, View):
         return render(request, 'account/AllUserAccount.html', context)
 
     def post(self, request, *args, **kwargs):
-        form = CustomUserForm(self.request.POST, self.request.FILES, instance=self.request.user.username)
+        # customuser = CustomUser.objects.get(username=self.request.user.username)
+        form = CustomUserForm(self.request.POST)
+        # form.instance.user = self.request.user
         if form.is_valid():
             form.save()
             messages.info(self.request, "Your are change successfully created!")
-            context = {'form': form}
             return redirect('all_user_update')
 
 # change additional information about the developer
