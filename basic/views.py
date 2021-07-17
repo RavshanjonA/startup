@@ -10,10 +10,10 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
-    IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm
+    IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm, AllUserIdeaForm, DeveloperAccountorm
 from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea
 from django.views.generic import CreateView
-from .forms import AllUserIdeaForm, DeveloperAccountorm
+
 
 
 #users registration
@@ -121,6 +121,22 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
+# CustomUserForm Update
+# def allUserUpdate(request):
+#     if request.method == "POST":
+#         form = CustomUserForm(request.POST, instance=request.user)
+#         print('+++++++++++++++++++++++++++++')
+#         if form.is_valid():
+#             form.save()
+#             print('******************************')
+#             messages.info(self.request, "Your are change successfully created!")
+#             return render(request, 'account/AllUserAccount.html', context)
+#     else:
+#         form = CustomUserForm(instance=request.user)
+#         context = {'form': form}
+#         return render(request, 'account/AllUserAccount.html', context)
+#     return redirect('all_user_update')
+
 # startapper_account by class based view
 # startapper_account by function based view
 # def startapper_account(request):
@@ -155,9 +171,22 @@ class Startapper_update(LoginRequiredMixin, View):
             return redirect(reverse('startapper_account'))
         return redirect('home')
 
+class AllUserUpdate(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        form = CustomUserForm(instance=alluser)
+        context = {'form':form}
+        return render(request, 'account/AllUserAccount.html', context)
 
-# change additional information about the developer and practitioner
-@login_required
+    def post(self, request, *args, **kwargs):
+        form = CustomUserForm(self.request.POST, self.request.FILES, instance=self.request.user.username)
+        if form.is_valid():
+            form.save()
+            messages.info(self.request, "Your are change successfully created!")
+            context = {'form': form}
+            return redirect('all_user_update')
+
+# change additional information about the developer
 class Developer_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         developer = Staff.objects.get(user=self.request.user)
@@ -172,6 +201,7 @@ class Developer_update(LoginRequiredMixin, View):
             form.save()
             messages.info(self.request, "Your application has been successfully created!")
             return redirect(reverse('developer_update'))
+
 
 
 # announcement detail

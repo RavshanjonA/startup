@@ -36,7 +36,7 @@ class CustomUser(AbstractUser):
     )
 
     def __str__(self):
-        return self.full_name or self.username
+        return str(self.full_name) or str(self.username)
 
 
 class Country(models.Model):
