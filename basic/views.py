@@ -12,8 +12,14 @@ from django.contrib.auth.decorators import login_required
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
     IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm, AllUserIdeaForm, DeveloperAccountorm, \
     AllUserAccountForm
-from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea
+from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea, SuccessProject
 from django.views.generic import CreateView
+
+
+def index(request):
+    ideas = IdeaStartapper.objects.all()
+    context = {'ideas': ideas}
+    return render(request, 'index.html', context)
 
 
 # users registration
@@ -74,10 +80,6 @@ def register(request):
     else:
         registr_form = CustomUserForm()
         return render(request, 'account/register.html', {'form': registr_form})
-
-
-def index(request):
-    return render(request, 'index.html')
 
 
 def login_user(request):
@@ -207,6 +209,7 @@ class Developer_update(LoginRequiredMixin, View):
 
 
 # announcement detail
+
 class announcementView(DetailView):
     model = IdeaStartapper
     template_name = 'idea_detail_startapper.html'
@@ -255,7 +258,10 @@ def developer_home(request):
 
 def startapper_home(request):
     startapper = Startapper.objects.get(user=request.user)
-    return render(request, 'startapper.html', {'startapper': startapper})
+    works = IdeaStartapper.objects.all()
+    print(works, '+++++++++++++++++')
+    context = {'works': works, 'startapper': startapper}
+    return render(request, 'startapper.html', context)
 
 
 # developers leave an application
