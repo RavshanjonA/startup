@@ -144,34 +144,42 @@ class Startapper_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         startapper_ = Startapper.objects.get(user=self.request.user)
         form = StartapperAccountForm(instance=startapper_)
-        login_url = 'login'
-        context = {'form': form}
+
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        obj = AllUserAccountForm(instance=alluser)
+
+        context = {'form': form, 'obj': obj}
         return render(request, 'account/startapper_account.html', context)
 
     def post(self, request, *args, **kwargs):
         form = StartapperAccountForm(self.request.POST, self.request.FILES, instance=self.request.user.startapper)
+
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        obj = AllUserAccountForm(self.request.POST, instance=alluser)
+
         if form.is_valid():
             form.save()
-            messages.info(self.request, "Your announcement successfully created!")
-            return redirect(reverse('startapper_account'))
-        return redirect('home')
-
-
-class AllUserUpdate(generic.UpdateView):
-    def get(self, request, *args, **kwargs):
-        alluser = CustomUser.objects.get(username=self.request.user.username)
-        form = AllUserAccountForm(instance=alluser)
-        context = {'form': form}
-        return render(request, 'account/AllUserAccount.html', context)
-
-    def post(self, request, *args, **kwargs):
-        alluser = CustomUser.objects.get(username=self.request.user.username)
-        form = AllUserAccountForm(self.request.POST, instance=alluser)
-        # form.instance.user = self.request.user
-        if form.is_valid():
-            form.save()
+            obj.save()
             messages.info(self.request, "Your are change successfully created!")
-            return redirect('all_user_update')
+            return redirect(reverse('startapper_account'))
+        messages.info(self.request, "change failed!")
+        return redirect(reverse('startapper_account'))
+
+
+# class AllUserUpdate(generic.UpdateView):
+#     def get(self, request, *args, **kwargs):
+#         alluser = CustomUser.objects.get(username=self.request.user.username)
+#         form = AllUserAccountForm(instance=alluser)
+#         context = {'form': form}
+#         return render(request, 'account/AllUserAccount.html', context)
+#
+#     def post(self, request, *args, **kwargs):
+#         alluser = CustomUser.objects.get(username=self.request.user.username)
+#         form = AllUserAccountForm(self.request.POST, instance=alluser)
+#         if form.is_valid():
+#             form.save()
+#             messages.info(self.request, "Your are change successfully created!")
+#             return redirect('all_user_update')
 
 
 # change additional information about the developer
@@ -179,14 +187,21 @@ class Developer_update(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         developer = Staff.objects.get(user=self.request.user)
         form = DeveloperAccountorm(instance=developer)
-        login_url = 'login'
-        context = {'form': form}
+
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        obj = AllUserAccountForm(instance=alluser)
+
+        context = {'form': form, 'obj': obj}
         return render(request, 'account/dev_account.html', context)
 
     def post(self, request, *args, **kwargs):
         form = DeveloperAccountorm(self.request.POST, self.request.FILES, instance=self.request.user.staff)
+
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        obj = AllUserAccountForm(self.request.POST, instance=alluser)
         if form.is_valid():
             form.save()
+            obj.save()
             messages.info(self.request, "Your application has been successfully created!")
             return redirect(reverse('developer_update'))
 

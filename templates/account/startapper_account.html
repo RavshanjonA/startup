@@ -126,10 +126,12 @@
             {% csrf_token %}
             <div class='form-group'>
                 <hr>
-                <h3>Full name: {{ request.user.full_name }}
-
-                </h3>
-                {{ form.as_p }}
+                <h3>Full name: {{ request.user.full_name }}</h3>
+                    {{ obj.as_p }}
+                    <hr>
+                {{ form.bio }}
+                {{ form.country }}
+                {{ form.image }}
                 <input type="submit" class=" btn btn-primary" value="Save">
             </div>
 

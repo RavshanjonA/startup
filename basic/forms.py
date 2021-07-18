@@ -22,10 +22,11 @@ class CustomUserForm(UserCreationForm):
             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
 
+
 class AllUserAccountForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-#         fields = '__all__'
+        #         fields = '__all__'
         fields = ('full_name', 'email', 'user_type', 'phone', 'username')
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
@@ -34,6 +35,7 @@ class AllUserAccountForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
+
 
 class LoginForm(AuthenticationForm):
     username = UsernameField(label=("Login"), widget=forms.TextInput(
@@ -72,8 +74,9 @@ class StartapperAccountForm(forms.ModelForm):
         widgets = {'user': forms.TextInput(attrs={'class': 'form-control'}),
                    'bio': forms.Textarea(attrs={'class': 'form-control'}),
                    'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
-
+                   'image': forms.FileInput(attrs={})
                    }
+
 
 class DeveloperAccountorm(forms.ModelForm):
     class Meta:
@@ -83,8 +86,9 @@ class DeveloperAccountorm(forms.ModelForm):
         widgets = {'user': forms.TextInput(attrs={'class': 'form-control'}),
                    'bio': forms.Textarea(attrs={'class': 'form-control'}),
                    'country': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'country'}),
-
+                   'image': forms.FileInput(attrs={})
                    }
+
 
 class IdeaStartApperForm(forms.ModelForm):
     class Meta:
@@ -125,7 +129,6 @@ class AllUserIdeaForm(forms.ModelForm):
     class Meta:
         model = AllUsersIdea
         exclude = ('user', 'created_at')
-
 
 # class DeveloperApplicationForm(forms.ModelForm):
 #     class Meta:

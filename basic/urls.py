@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import index, register, login_user, logout_user, announcement, announcementView, announcement_delete, \
-    Startapper_update, developer_home, startapper_home, practitioner_home, AllUserIdea, Developer_update, AllUserUpdate
+    Startapper_update, developer_home, startapper_home, practitioner_home, AllUserIdea, Developer_update#, AllUserUpdate
 
 urlpatterns = [
     path('', index, name='home'),
@@ -8,7 +8,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login_user'),
     path('logout_user/', logout_user, name='logout_user'),
-    path('account/update/', AllUserUpdate.as_view(), name='all_user_update'),
+    #path('account/update/', AllUserUpdate.as_view(), name='all_user_update'),
     path('developer/', developer_home, name='developer'),
     path('developer/update/', Developer_update.as_view(), name='developer_update'),
     path('startapper/', startapper_home, name='startapper'),

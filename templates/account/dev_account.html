@@ -122,15 +122,15 @@
             {% endfor %}
         {% endif %}
         <form action="{% url 'developer_update' %}" method="post" enctype="multipart/form-data">
-
             {% csrf_token %}
             <div class='form-group'>
+                {{ obj.as_p }}
                 <hr>
-                <h3>Full name: {{ request.user.full_name }}
-
-                </h3>
-                {{ form.as_p }}
-                <input type="submit" class=" btn btn-primary" value="Save">
+                {{ form.bio }}
+                {{ form.country }}
+                {{ form.image }}
+                <hr>
+                <br><input type="submit" class=" btn btn-primary" value="Save">
             </div>
 
         </form>
