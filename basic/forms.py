@@ -22,18 +22,18 @@ class CustomUserForm(UserCreationForm):
             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
         }
 
-# class AllUserAccountForm(forms.ModelForm):
-#     class Meta:
-#         model = User
+class AllUserAccountForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
 #         fields = '__all__'
-#         fields = ('full_name', 'email', 'user_type', 'phone', 'username')
-#         widgets = {
-#             'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
-#             'username': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'username'}),
-#             'email': forms.EmailInput(attrs={'class': 'form-control mt-2', 'name': 'email'}),
-#             'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
-#             'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
-#         }
+        fields = ('full_name', 'email', 'user_type', 'phone', 'username')
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'full_name'}),
+            'username': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'username'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control mt-2', 'name': 'email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control mt-2', 'name': 'phone'}),
+            'user_type': forms.Select(attrs={'class': 'form-control mt-2', 'name': 'user_type'}),
+        }
 
 class LoginForm(AuthenticationForm):
     username = UsernameField(label=("Login"), widget=forms.TextInput(

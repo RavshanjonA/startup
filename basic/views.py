@@ -10,13 +10,13 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
-    IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm, AllUserIdeaForm, DeveloperAccountorm
+    IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm, AllUserIdeaForm, DeveloperAccountorm, \
+    AllUserAccountForm
 from basic.models import CustomUser, Startapper, Staff, IdeaStartapper, ApplicationStaff, AllUsersIdea
 from django.views.generic import CreateView
 
 
-
-#users registration
+# users registration
 def register(request):
     if request.method == 'POST':
         full_name = request.POST['full_name']
@@ -121,21 +121,6 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
-# CustomUserForm Update
-# def allUserUpdate(request):
-#     if request.method == "POST":
-#         form = CustomUserForm(request.POST, instance=request.user)
-#         print('+++++++++++++++++++++++++++++')
-#         if form.is_valid():
-#             form.save()
-#             print('******************************')
-#             messages.info(self.request, "Your are change successfully created!")
-#             return render(request, 'account/AllUserAccount.html', context)
-#     else:
-#         form = CustomUserForm(instance=request.user)
-#         context = {'form': form}
-#         return render(request, 'account/AllUserAccount.html', context)
-#     return redirect('all_user_update')
 
 # startapper_account by class based view
 # startapper_account by function based view
@@ -171,21 +156,23 @@ class Startapper_update(LoginRequiredMixin, View):
             return redirect(reverse('startapper_account'))
         return redirect('home')
 
+
 class AllUserUpdate(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         alluser = CustomUser.objects.get(username=self.request.user.username)
-        form = CustomUserForm(instance=alluser)
-        context = {'form':form}
+        form = AllUserAccountForm(instance=alluser)
+        context = {'form': form}
         return render(request, 'account/AllUserAccount.html', context)
 
     def post(self, request, *args, **kwargs):
-        # customuser = CustomUser.objects.get(username=self.request.user.username)
-        form = CustomUserForm(self.request.POST)
+        alluser = CustomUser.objects.get(username=self.request.user.username)
+        form = AllUserAccountForm(self.request.POST, instance=alluser)
         # form.instance.user = self.request.user
         if form.is_valid():
             form.save()
             messages.info(self.request, "Your are change successfully created!")
             return redirect('all_user_update')
+
 
 # change additional information about the developer
 class Developer_update(LoginRequiredMixin, View):
@@ -204,7 +191,6 @@ class Developer_update(LoginRequiredMixin, View):
             return redirect(reverse('developer_update'))
 
 
-
 # announcement detail
 class announcementView(DetailView):
     model = IdeaStartapper
@@ -214,7 +200,7 @@ class announcementView(DetailView):
     login_url = 'login'  # new
 
 
-#delete given ads
+# delete given ads
 @login_required
 def announcement_delete(request, id):
     ann = get_object_or_404(IdeaStartapper, pk=id)
@@ -223,7 +209,7 @@ def announcement_delete(request, id):
         return redirect('home')
 
 
-#developers leave an application
+# developers leave an application
 @login_required
 def developer_home(request):
     developer = Staff.objects.get(user=request.user)
@@ -257,7 +243,7 @@ def startapper_home(request):
     return render(request, 'startapper.html', {'startapper': startapper})
 
 
-#developers leave an application
+# developers leave an application
 @login_required()
 def practitioner_home(request):
     practitioner = Staff.objects.get(user=request.user)
