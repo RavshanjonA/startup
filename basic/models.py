@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
+from django.urls import reverse
 
 
 class CustomUser(AbstractUser):
@@ -78,6 +79,10 @@ class IdeaStartapper(models.Model):
 
     def __str__(self):
         return f"{self.user}  ---/--- {self.title}"
+
+
+    def get_absolute_url(self):
+        return reverse('idea_detail_startapper', args=[str(self.id)])
 
 
 class AllUsersIdea(models.Model):

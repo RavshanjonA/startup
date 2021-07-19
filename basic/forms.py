@@ -130,6 +130,9 @@ class AllUserIdeaForm(forms.ModelForm):
         model = AllUsersIdea
         exclude = ('user', 'created_at')
 
+
+
+
 # class DeveloperApplicationForm(forms.ModelForm):
 #     class Meta:
 #         model = ApplicationStaff

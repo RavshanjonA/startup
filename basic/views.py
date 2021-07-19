@@ -123,6 +123,11 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
+# idea startapper update
+class AnnouncementUpdate(generic.UpdateView):
+    model = IdeaStartapper
+    fields = ('title', 'description', 'file')
+    template_name = 'announcement_update.html'
 
 # startapper_account by class based view
 # startapper_account by function based view

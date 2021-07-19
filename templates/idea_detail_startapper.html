@@ -16,7 +16,7 @@
                         <p>create at: {{ object.created_at|date:"d M Y" }}</p>
                         <p>author: {{ object.user }}</p>
                         <hr>
-                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'announcement_update' object.id %}" class="btn btn-primary">Edit</a>
                         <form action="{% url 'ann-delete' object.id %}" method="POST" >
                           {% csrf_token %}
                           <button  class="btn btn-danger">Delete</button>
