@@ -4,9 +4,9 @@ from .views import *
 
 router = routers.SimpleRouter()
 router.register('users', UserList)
+router.register('startapper', StartapperViewSet)
 
 urlpatterns = router.urls + [
-    # path('ass', UserList.as_view()),
     path('token/', TokenGenerateView.as_view(), name='token_obtain_pair'),
 
 ]

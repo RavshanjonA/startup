@@ -2,7 +2,12 @@ from rest_framework import serializers
 from basic.models import CustomUser
 # from .models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from basic.models import Startapper
 
+class StartapperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Startapper
+        fields = ('user', 'bio', 'country', 'image')
 
 class UserReg(serializers.ModelSerializer):
 

@@ -3,9 +3,13 @@ from rest_framework import permissions, response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status as rest_status
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserSerializer, TokenSerializer
-from basic.models import CustomUser
+from .serializers import UserSerializer, TokenSerializer, StartapperSerializer
+from basic.models import CustomUser, Startapper
 
+
+class StartapperViewSet(ModelViewSet):
+    queryset = Startapper.objects.all()
+    serializer_class = StartapperSerializer
 
 class UserList(ModelViewSet):
     serializer_class = UserSerializer
