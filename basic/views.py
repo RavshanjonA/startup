@@ -8,6 +8,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.views import generic
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 from basic.forms import CustomUserForm, LoginForm, StartapperAccountForm, SimpleCustomForm, \
     IdeaStartApperForm, ApplicationDeveloperForm, ApplicationPractitionerForm, AllUserIdeaForm, DeveloperAccountorm, \
@@ -123,11 +124,13 @@ def announcement(request):
     else:
         return render(request, 'announcement.html', {'idea_startapper': idea_startapper})
 
+
 # idea startapper update
 class AnnouncementUpdate(generic.UpdateView):
     model = IdeaStartapper
     fields = ('title', 'description', 'file')
     template_name = 'announcement_update.html'
+
 
 # startapper_account by class based view
 # startapper_account by function based view
