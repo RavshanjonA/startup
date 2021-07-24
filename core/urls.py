@@ -4,9 +4,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
+from .yasg import urlpatterns as doc_url
 
 
-urlpatterns = [
+urlpatterns = doc_url+ [
     path('admin/', admin.site.urls),
     path('', include('basic.urls')),
     path('api/v1/', include('api.urls')),
@@ -15,6 +16,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include('basic.urls')),
+    path('api/v1/', include('api.urls')),
 
 )
 if settings.DEBUG:
