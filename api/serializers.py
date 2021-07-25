@@ -2,15 +2,31 @@ from rest_framework import serializers
 from basic.models import CustomUser
 # from .models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from basic.models import Startapper
+from basic.models import Startapper, IdeaStartapper, Staff, ApplicationStaff
+
+class ApplicationStaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApplicationStaff
+        fields = ('user','title','description','resume','work_type')
+
+class IdeaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IdeaStartapper
+        fields = ('user', 'title', 'description', 'file')
+
+
+class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = ('user', 'bio', 'country', 'image')
 
 class StartapperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Startapper
         fields = ('user', 'bio', 'country', 'image')
 
-class UserReg(serializers.ModelSerializer):
 
+class UserReg(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('username', 'full_name')
@@ -25,7 +41,6 @@ class UserSerializer(serializers.ModelSerializer):
             if data['password1'] != data['password2']:
                 raise serializers.ValidationError('Passwords must match.')
         return data
-
 
     def create(self, validated_data):
         print(validated_data)

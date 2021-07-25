@@ -3,13 +3,30 @@ from rest_framework import permissions, response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status as rest_status
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserSerializer, TokenSerializer, StartapperSerializer
-from basic.models import CustomUser, Startapper
+from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, IdeaSerializer, StaffSerializer, \
+    ApplicationStaffSerializer
+from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff
+
+
+class ApplicationStaffViewSet(ModelViewSet):
+    queryset = ApplicationStaff.objects.all()
+    serializer_class = ApplicationStaffSerializer
+
+
+class IdeaViewSet(ModelViewSet):
+    queryset = IdeaStartapper.objects.all()
+    serializer_class = IdeaSerializer
+
+
+class StaffViewSet(ModelViewSet):
+    queryset = Staff.objects.all()
+    serializer_class = StaffSerializer
 
 
 class StartapperViewSet(ModelViewSet):
     queryset = Startapper.objects.all()
     serializer_class = StartapperSerializer
+
 
 class UserList(ModelViewSet):
     serializer_class = UserSerializer
@@ -30,4 +47,3 @@ class TokenGenerateView(TokenObtainPairView):
 
     def get_serializer_context(self):
         return {'request': self.request}
-
