@@ -4,9 +4,12 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import status as rest_status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, IdeaSerializer, StaffSerializer, \
-    ApplicationStaffSerializer
-from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff
+    ApplicationStaffSerializer, SuccessProjectSerializer
+from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
 
+class SuccessProjectViewSet(ModelViewSet):
+    queryset = SuccessProject.objects.all()
+    serializer_class=SuccessProjectSerializer
 
 class ApplicationStaffViewSet(ModelViewSet):
     queryset = ApplicationStaff.objects.all()

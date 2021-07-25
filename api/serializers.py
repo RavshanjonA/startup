@@ -2,12 +2,20 @@ from rest_framework import serializers
 from basic.models import CustomUser
 # from .models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from basic.models import Startapper, IdeaStartapper, Staff, ApplicationStaff
+from basic.models import Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
+
+
+class SuccessProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuccessProject
+        fields = ('title', 'description', 'image', 'url')
+
 
 class ApplicationStaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApplicationStaff
-        fields = ('user','title','description','resume','work_type')
+        fields = ('user', 'title', 'description', 'resume', 'work_type')
+
 
 class IdeaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,6 +27,7 @@ class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         fields = ('user', 'bio', 'country', 'image')
+
 
 class StartapperSerializer(serializers.ModelSerializer):
     class Meta:
