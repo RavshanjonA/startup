@@ -8,25 +8,30 @@ from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, 
 from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
 
 class SuccessProjectViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = SuccessProject.objects.all()
     serializer_class=SuccessProjectSerializer
 
 class ApplicationStaffViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = ApplicationStaff.objects.all()
     serializer_class = ApplicationStaffSerializer
 
 
 class IdeaViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = IdeaStartapper.objects.all()
     serializer_class = IdeaSerializer
 
 
 class StaffViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
 
 
 class StartapperViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Startapper.objects.all()
     serializer_class = StartapperSerializer
 
