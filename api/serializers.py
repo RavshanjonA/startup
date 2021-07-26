@@ -2,43 +2,8 @@ from rest_framework import serializers
 from basic.models import CustomUser
 # from .models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from basic.models import Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
+from basic.models import Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject, CommentofPost
 
-
-class SuccessProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SuccessProject
-        fields = ('title', 'description', 'image', 'url')
-
-
-class ApplicationStaffSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ApplicationStaff
-        fields = ('user', 'title', 'description', 'resume', 'work_type')
-
-
-class IdeaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = IdeaStartapper
-        fields = ('user', 'title', 'description', 'file')
-
-
-class StaffSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Staff
-        fields = ('user', 'bio', 'country', 'image')
-
-
-class StartapperSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Startapper
-        fields = ('user', 'bio', 'country', 'image')
-
-
-class UserReg(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'full_name')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -81,3 +46,56 @@ class TokenSerializer(TokenObtainPairSerializer):
         data['access'] = str(refresh.access_token)
         data['user'] = UserSerializer(instance=self.user, context=self.context).data
         return data
+
+
+class CommentSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommentofPost
+        fields = "__all__"
+
+
+class SuccessProjectSerializer(serializers.ModelSerializer):
+    # comments = CommentSerializers()
+
+    class Meta:
+        model = SuccessProject
+        fields = ('title', 'description', 'image', 'url',)
+
+
+class ApplicationStaffSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = ApplicationStaff
+        fields = ('user', 'title', 'description', 'resume', 'work_type')
+
+
+class IdeaSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = IdeaStartapper
+        fields = ('user', 'title', 'description', 'file')
+
+
+class StaffSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Staff
+        fields = ('id', 'user', 'bio', 'country', 'image')
+
+
+class StartapperSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Startapper
+        fields = ('id', 'user', 'bio', 'country', 'image')
+
+
+class UserReg(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'full_name')
+

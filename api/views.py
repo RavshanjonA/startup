@@ -7,33 +7,6 @@ from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, 
     ApplicationStaffSerializer, SuccessProjectSerializer
 from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
 
-class SuccessProjectViewSet(ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = SuccessProject.objects.all()
-    serializer_class=SuccessProjectSerializer
-
-class ApplicationStaffViewSet(ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = ApplicationStaff.objects.all()
-    serializer_class = ApplicationStaffSerializer
-
-
-class IdeaViewSet(ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = IdeaStartapper.objects.all()
-    serializer_class = IdeaSerializer
-
-
-class StaffViewSet(ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Staff.objects.all()
-    serializer_class = StaffSerializer
-
-
-class StartapperViewSet(ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Startapper.objects.all()
-    serializer_class = StartapperSerializer
 
 
 class UserList(ModelViewSet):
@@ -55,3 +28,37 @@ class TokenGenerateView(TokenObtainPairView):
 
     def get_serializer_context(self):
         return {'request': self.request}
+
+
+
+class SuccessProjectViewSet(ModelViewSet):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = SuccessProject.objects.all()
+    serializer_class=SuccessProjectSerializer
+
+class ApplicationStaffViewSet(ModelViewSet):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = ApplicationStaff.objects.all()
+    serializer_class = ApplicationStaffSerializer
+
+    def get_serializer_context(self):
+        return {'request': self.request}
+
+
+class IdeaViewSet(ModelViewSet):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = IdeaStartapper.objects.all()
+    serializer_class = IdeaSerializer
+
+
+class StaffViewSet(ModelViewSet):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Staff.objects.all()
+    serializer_class = StaffSerializer
+
+
+class StartapperViewSet(ModelViewSet):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Startapper.objects.all()
+    serializer_class = StartapperSerializer
+

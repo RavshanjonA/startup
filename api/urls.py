@@ -11,6 +11,6 @@ router.register('Application Staff', ApplicationStaffViewSet)
 router.register('Success Project', SuccessProjectViewSet)
 
 urlpatterns = router.urls + [
-    path('token/', TokenGenerateView.as_view(), name='token_obtain_pair'),
+    path('login/', TokenGenerateView.as_view(), name='token_obtain_pair'),
 
 ]
