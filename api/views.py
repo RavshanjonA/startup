@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, IdeaSerializer, StaffSerializer, \
     ApplicationStaffSerializer, SuccessProjectSerializer, CommentSerializers
 from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
+from .pagination import CustomPagination
 
 
 
@@ -14,6 +15,7 @@ class UserList(ModelViewSet):
     print(UserSerializer, '+++++++++++++++++++++++++++++++++')
     queryset = CustomUser.objects.all()
     permission_classes = (permissions.AllowAny,)
+    pagination_class = CustomPagination
 
     def get_serializer_context(self):
         return {'request': self.request}
