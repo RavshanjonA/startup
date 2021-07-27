@@ -65,12 +65,12 @@ class SuccessProjectSerializer(serializers.ModelSerializer):
         model = SuccessProject
         fields = ('title', 'description', 'image', 'url',)
 
-# class CommentSerializers(serializers.ModelSerializer):
-#     post = SuccessProjectSerializer()
-#
-#     class Meta:
-#         model = CommentofPost
-#         fields = ('post', 'replay_to', 'owner', 'comment', )
+class CommentSerializers(serializers.ModelSerializer):
+    post = SuccessProjectSerializer()
+
+    class Meta:
+        model = CommentofPost
+        fields = ('post', 'replay_to', 'owner', 'comment', )
 
 class StaffSerializer(serializers.ModelSerializer):
     user = UserSerializer()
