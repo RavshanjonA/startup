@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-"DEFAULT_PERMISSION_CLASSES": [
+    "DEFAULT_PERMISSION_CLASSES": [
         'rest_framework.permissions.AllowAny'  # IsAuthenticated , IsAuthenticatedOrReadOnly, IsAdminUser
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data.get('password1') and data.get('password2'):
             if data['password1'] != data['password2']:
-                raise serializers.ValidationError('Passwords must match.')
+                raise serializers.ValidationError('Passwords must match!')
         return data
 
     def create(self, validated_data):
@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
         data['password'] = validated_data['password1']
         data['username'] = validated_data['username']
         user = self.Meta.model.objects.create_user(**data)
-        user.is_active = False
+        user.is_active = True
         user.save()
 
         return user
@@ -39,45 +39,38 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TokenSerializer(TokenObtainPairSerializer):
 
+    # @classmethod
+    # def get_token(cls, user):
+    #     token = super(TokenSerializer, cls).get_token(user)
+    #     print(token,'+++++++++++++++++++++')
+    #     # Add custom claims
+    #     token['username'] = user.username
+    #     return token
+
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
-        data['user'] = UserSerializer(instance=self.user, context=self.context).data
+        # data['user'] = UserSerializer(instance=self.user, context=self.context).data
         return data
 
 
-class CommentSerializers(serializers.ModelSerializer):
-
-    class Meta:
-        model = CommentofPost
-        fields = "__all__"
 
 
 class SuccessProjectSerializer(serializers.ModelSerializer):
-    # comments = CommentSerializers()
+    # commit = CommentSerializers()
 
     class Meta:
         model = SuccessProject
         fields = ('title', 'description', 'image', 'url',)
 
-
-class ApplicationStaffSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = ApplicationStaff
-        fields = ('user', 'title', 'description', 'resume', 'work_type')
-
-
-class IdeaSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = IdeaStartapper
-        fields = ('user', 'title', 'description', 'file')
-
+# class CommentSerializers(serializers.ModelSerializer):
+#     post = SuccessProjectSerializer()
+#
+#     class Meta:
+#         model = CommentofPost
+#         fields = ('post', 'replay_to', 'owner', 'comment', )
 
 class StaffSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -86,12 +79,29 @@ class StaffSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'bio', 'country', 'image')
 
 
+class ApplicationStaffSerializer(serializers.ModelSerializer):
+    user = StaffSerializer()
+
+    class Meta:
+        model = ApplicationStaff
+        fields = ('user', 'title', 'description', 'resume', 'work_type')
+
+
 class StartapperSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
         model = Startapper
         fields = ('id', 'user', 'bio', 'country', 'image')
+
+class IdeaSerializer(serializers.ModelSerializer):
+    user = StartapperSerializer()
+
+    class Meta:
+        model = IdeaStartapper
+        fields = ('user', 'title', 'description', 'file')
+
+
 
 
 class UserReg(serializers.ModelSerializer):

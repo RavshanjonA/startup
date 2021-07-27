@@ -122,6 +122,9 @@ class SuccessProject(TranslatableModel):
     image = models.ImageField(upload_to='projects_photo/', null=True)
     url = models.URLField(max_length=255)
 
+    def __str__(self):
+        return self.title
+
 
 class CommentofPost(models.Model):
     post = models.ForeignKey(SuccessProject, on_delete=models.CASCADE, related_name='comment')
