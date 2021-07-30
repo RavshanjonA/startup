@@ -57,20 +57,33 @@ class TokenSerializer(TokenObtainPairSerializer):
 
 
 
-
-class SuccessProjectSerializer(serializers.ModelSerializer):
-    # commit = CommentSerializers()
-
-    class Meta:
-        model = SuccessProject
-        fields = ('title', 'description', 'image', 'url',)
-
-class CommentSerializers(serializers.ModelSerializer):
-    post = SuccessProjectSerializer()
+class CommentCreateSerializers(serializers.ModelSerializer):
+    # post = SuccessProjectSerializer()
 
     class Meta:
         model = CommentofPost
-        fields = ('post', 'replay_to', 'owner', 'comment', )
+        fields = "__all__"
+        # fields = ('post', 'replay_to', 'owner', 'comment', )
+
+
+class SuccessProjectSerializer(serializers.ModelSerializer):
+    commit = CommentCreateSerializers()
+
+    class Meta:
+        model = SuccessProject
+        fields = ('id', 'title', 'description', 'image', 'url', 'commit',)
+
+    # def create(self, validated_data):
+    #     return SuccessProject.objects.create(**validated_data)
+    #
+    # def update(self, instance, validated_date):
+    #     instance.title = validated_date.get('title', instance.title)
+    #     instance.description = validated_date.get('description', instance.description)
+    #     instance.image = validated_date.get('image', instance.image)
+    #     instance.url = validated_date.get('url', instance.url)
+    #     instance.save()
+    #     return instance
+
 
 class StaffSerializer(serializers.ModelSerializer):
     user = UserSerializer()

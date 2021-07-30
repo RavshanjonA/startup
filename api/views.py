@@ -1,13 +1,14 @@
 from drf_yasg import openapi
-from rest_framework import permissions, response
+from rest_framework import permissions, response, mixins, generics
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import status as rest_status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer, TokenSerializer, StartapperSerializer, IdeaSerializer, StaffSerializer, \
-    ApplicationStaffSerializer, SuccessProjectSerializer, CommentSerializers
+    ApplicationStaffSerializer, SuccessProjectSerializer, CommentCreateSerializers
 from basic.models import CustomUser, Startapper, IdeaStartapper, Staff, ApplicationStaff, SuccessProject
 from .pagination import CustomPagination
-
 
 
 class UserList(ModelViewSet):
@@ -34,29 +35,38 @@ class TokenGenerateView(TokenObtainPairView):
         return {'request': self.request}
 
 
-
 class SuccessProjectViewSet(ModelViewSet):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = SuccessProject.objects.all()
     serializer_class=SuccessProjectSerializer
 
-class CommentViewSet(ModelViewSet):
-    queryset = SuccessProject.objects.all()
-    serializer_class = CommentSerializers
+class CommentCreateView(APIView):
+
+    def post(self, request):
+        commit = CommentCreateSerializers(data=request.data)
+        if commit.is_valid():
+            commit.save()
+        return Response(status=201)
+
+# class CommentViewSet(ModelViewSet):
+#     queryset = SuccessProject.objects.all()
+#     serializer_class = CommentSerializers
+
 
 class ApplicationStaffViewSet(ModelViewSet):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = ApplicationStaff.objects.all()
     serializer_class = ApplicationStaffSerializer
 
-    # def get_serializer_context(self):
-    #     return {'request': self.request}
+    def get_serializer_context(self):
+        return {'request': self.request}
 
 
 class IdeaViewSet(ModelViewSet):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = IdeaStartapper.objects.all()
     serializer_class = IdeaSerializer
+    pagination_class = CustomPagination
 
 
 class StaffViewSet(ModelViewSet):
@@ -69,4 +79,3 @@ class StartapperViewSet(ModelViewSet):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Startapper.objects.all()
     serializer_class = StartapperSerializer
-

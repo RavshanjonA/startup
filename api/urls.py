@@ -9,9 +9,11 @@ router.register('staff', StaffViewSet)
 router.register('idea-startapper', IdeaViewSet)
 router.register('application-staff', ApplicationStaffViewSet)
 router.register('success-project', SuccessProjectViewSet)
-router.register('commend-post', CommentViewSet)
+# router.register('commend-post', CommentViewSet)
 
 urlpatterns = router.urls + [
     path('login/', TokenGenerateView.as_view(), name='token_obtain_pair'),
+    path('comment-createView/', CommentCreateView.as_view()),
+    # path('succes-project-detail/<int:pk>/', SuccessProjectDetail.as_view(), name='succesprojectdetail'),
 
 ]
