@@ -67,11 +67,11 @@ class CommentCreateSerializers(serializers.ModelSerializer):
 
 
 class SuccessProjectSerializer(serializers.ModelSerializer):
-    commit = CommentCreateSerializers()
+    # commit = CommentCreateSerializers()
 
     class Meta:
         model = SuccessProject
-        fields = ('id', 'title', 'description', 'image', 'url', 'commit',)
+        fields = ('id', 'title', 'description', 'image', 'url',)
 
     # def create(self, validated_data):
     #     return SuccessProject.objects.create(**validated_data)
